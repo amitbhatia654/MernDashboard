@@ -39,7 +39,7 @@ const SignUp = () => {
     e.preventDefault();
     setLoading(true);
     const res = await axios.post(
-      "http://192.168.29.68:5000/api/auth/register",
+      `${import.meta.env.VITE_API_URL}/api/auth/register`,
       {
         email,
         password,

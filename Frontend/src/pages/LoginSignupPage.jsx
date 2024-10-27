@@ -34,10 +34,13 @@ const LoginSignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const res = await axios.post("http://192.168.29.68:5000/api/auth/login", {
-      email,
-      password,
-    });
+    const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/auth/login`,
+      {
+        email,
+        password,
+      }
+    );
 
     if (res.status == 200) localStorage.setItem("token", res.data.token);
 
