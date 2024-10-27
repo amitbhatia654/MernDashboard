@@ -1,0 +1,91 @@
+.sidenav-small {
+    /* border: 2px solid black; */
+    width: 60px;
+}
+
+.sidenav-full {
+    /* border: 2px solid black; */
+    width: 290px;
+}
+
+@media screen {}
+
+.main-div {
+    display: flex;
+}
+
+.homepage {
+    width: 100%;
+    min-height: 691px;
+}
+
+.border {
+    border: 1px solid black;
+}
+
+body {
+    background-color: #E7E7EE;
+}
+
+.text-danger {
+    color: red;
+}
+
+
+/* For extra small devices (phones) */
+@media only screen and (max-width: 575.98px) {
+    .sidenav-full {
+        width: 290px;
+        /* Adjust width as needed for smaller screens */
+    }
+}
+
+/* For small devices (tablets) */
+/* @media only screen and (min-width: 576px) and (max-width: 767.98px) {
+    .sidenav-full {
+        width: 250px;
+        
+    }
+} */
+
+/* For medium devices (small laptops) */
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+    .sidenav-full {
+        width: 200px;
+        /* Width set to 290px for medium screens */
+    }
+}
+
+/* For large devices (desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1199.98px) {
+    .sidenav-full {
+        width: 200px;
+        /* Adjust width as needed for large screens */
+    }
+}
+
+/* For extra large devices (large desktops) */
+@media only screen and (min-width: 1200px) {
+    .sidenav-full {
+        width: 200px;
+        /* Adjust width as needed for extra large screens */
+    }
+}
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #514b82;
+    -webkit-mask: radial-gradient(circle closest-side at 50% 40%, #0000 94%, #000);
+    transform-origin: 50% 40%;
+    animation: l25 1s infinite linear;
+}
+
+@keyframes l25 {
+    100% {
+        transform: rotate(1turn)
+    }
+}
