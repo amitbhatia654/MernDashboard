@@ -21,6 +21,8 @@ const login = async (req, res) => {
 }
 
 
+
+
 const register = async (req, res) => {
     try {
         const { name, email, phone, password } = req.body;
@@ -42,6 +44,19 @@ const register = async (req, res) => {
 }
 
 
+const profile = async (req, res) => {
+    try {
+        console.log("Profile func is called")
+        return res.status(200).send("User is valid")
+    }
+
+    catch (error) {
+        console.log('some error in profile');
+
+    }
+}
+
+
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
@@ -59,4 +74,4 @@ const verifyToken = (req, res, next) => {
 };
 
 
-module.exports = { login, register, verifyToken }
+module.exports = { login, register, verifyToken, profile }
