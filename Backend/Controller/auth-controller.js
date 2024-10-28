@@ -1,6 +1,5 @@
 const User = require("../Models/UserModel")
 const bcrypt = require('bcrypt');
-const secretKey = "Amit Bhatia"
 const jwt = require("jsonwebtoken")
 
 const login = async (req, res) => {
@@ -10,7 +9,7 @@ const login = async (req, res) => {
             return res.status(203).send('Email or Password is Incorrect!')
         }
 
-        token = jwt.sign({ email: user.email }, secretKey, { expiresIn: "1hr" })
+        token = jwt.sign({ email: user.email }, process.env.secretKey, { expiresIn: "24hr" })
         return res.status(200).json({ message: "User Log In succesfully", token })
     }
 
@@ -57,21 +56,7 @@ const profile = async (req, res) => {
 }
 
 
-const verifyToken = (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    const token = authHeader && authHeader.split(" ")[1];
-
-    if (!token) return res.status(401).json({ message: "No token provided" });
-
-    jwt.verify(token, secretKey, (err, user) => {
-        if (err) return res.status(403).json({ message: "Invalid or expired token" });
-
-        return res.status(200).send("Token Verified")
-
-        //req.user = user; // Token is valid, store user info in req.user
-        // next();
-    });
-};
 
 
-module.exports = { login, register, verifyToken, profile }
+
+module.exports = { login, register, profile }

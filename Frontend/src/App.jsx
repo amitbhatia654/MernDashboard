@@ -8,6 +8,7 @@ import Employee from "./pages/EmployeeManagement/Employee";
 import CreateEmployeeData from "./pages/EmployeeManagement/CreateEmployeeData";
 import PrivateRoute from "./pages/PrivateRoute";
 import SignUp from "./pages/EmployeeManagement/SignUp";
+import MyProfile from "./pages/MyProfile";
 
 function App() {
   const isUserLogin = () => {
@@ -49,6 +50,7 @@ function App() {
         <Route path="/" element={<PrivateRoute />}>
           <Route index element={<Main_dashBoard></Main_dashBoard>}></Route>
           <Route path="employees" element={<Employee />}></Route>
+          <Route path="profile" element={<MyProfile></MyProfile>}></Route>
           <Route
             path="/add-new-employee"
             element={<CreateEmployeeData />}

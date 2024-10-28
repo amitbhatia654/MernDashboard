@@ -104,11 +104,18 @@ export default function Index() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">Profile</Typography>
+            <MenuItem>
+              <Typography
+                textAlign="center"
+                onClick={() => {
+                  navigate("/profile");
+                }}
+              >
+                Profile
+              </Typography>
             </MenuItem>
 
-            <MenuItem onClick={handleCloseUserMenu}>
+            <MenuItem>
               <Typography
                 textAlign="center"
                 onClick={async () => {
