@@ -11,6 +11,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+
 import React, { useState } from "react";
 import SideNav from "../components/SideNav";
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
@@ -144,7 +145,9 @@ export default function Index() {
               {<MenuIcon fontSize="small" />}
             </button>
           </Grid>
-          <Outlet></Outlet>
+          <div className="">
+            <Outlet></Outlet>
+          </div>
         </Box>
       </div>
     </>

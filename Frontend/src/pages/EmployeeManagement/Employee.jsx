@@ -41,57 +41,64 @@ export default function Employee() {
   }, []);
 
   return (
-    <Box
-      sx={{ m: 2 }}
-      boxShadow="0px 5px 8px rgba(0, 0, 0, 0.1)"
-    >
+    <Box sx={{ m: 1, p: 2 }} boxShadow="0px 5px 8px rgba(0, 0, 0, 0.1)">
       <Box display={"flex"} justifyContent={"space-between"}>
-        <Box component={"h2"} sx={{ my: 2 }}>
-          All Employees{" "}
+        <Box component={"h2"} sx={{ my: 0 }}>
+          EMPLOYEES{" "}
         </Box>
 
         <Button
           variant="outlined"
-          sx={{ my: 2 }}
+          sx={{
+            my: 1,
+            color: "#47478c",
+            backgroundColor: "white",
+            // fontWeight: "bold",
+            fontSize: "16px",
+          }}
           onClick={() => navigate("/add-new-employee")}
         >
           Add Employee
         </Button>
       </Box>
 
-      <TableContainer>
+      <TableContainer className="scrollable-container">
         <Table sx={{}} aria-label="simple table">
-          <TableHead sx={{ backgroundColor: "grey" }}>
+          <TableHead
+            sx={{
+              backgroundColor: "#47478c",
+              color: "wheat",
+              position: "sticky",
+              top: 0,
+              // zIndex: 1,
+            }}
+          >
             <TableRow>
-              <TableCell>S.No.</TableCell>
-              <TableCell>Employee Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Department</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell sx={{ color: "white" }}>S.No.</TableCell>
+              <TableCell sx={{ color: "white" }}>Employee Name</TableCell>
+              <TableCell sx={{ color: "white" }}>Email</TableCell>
+              <TableCell sx={{ color: "white" }}>Phone</TableCell>
+              <TableCell sx={{ color: "white" }}>Department</TableCell>
+              <TableCell sx={{ color: "white" }}>Address</TableCell>
+              <TableCell sx={{ color: "white" }}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {allemployee.length >= 0 ? (
               allemployee?.map((row, index) => (
-                <TableRow
-                  key={index}
-                >
+                <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{row?.empName}</TableCell>
                   <TableCell>{row?.empEmail}</TableCell>
                   <TableCell>{row?.empPhone}</TableCell>
                   <TableCell>{row?.empDepartment}</TableCell>
-                  <TableCell>
-                    {row?.empAddress}
-                    {console.log(row, "the ror ")}
-                  </TableCell>
+                  <TableCell>{row?.empAddress}</TableCell>
                   <TableCell>
                     <Grid container>
                       <Grid item lg={4}>
                         <button
                           type="button"
+                          style={{ color: "#47478c" }}
                           onClick={() => handleEdit(row._id)}
                         >
                           <BorderColorIcon />
@@ -99,6 +106,7 @@ export default function Employee() {
                       </Grid>
                       <Grid item lg={4}>
                         <button
+                          style={{ color: "#47478c" }}
                           type="button"
                           onClick={() => handleDelete(row._id)}
                         >

@@ -1,11 +1,11 @@
 .sidenav-small {
-    /* border: 2px solid black; */
-    width: 60px;
+    width: 55px;
 }
 
+
+
 .sidenav-full {
-    /* border: 2px solid black; */
-    width: 290px;
+    min-width: 190px;
 }
 
 @media screen {}
@@ -16,7 +16,7 @@
 
 .homepage {
     width: 100%;
-    min-height: 691px;
+    min-height: 88vh;
 }
 
 .border {
@@ -89,3 +89,27 @@ body {
         transform: rotate(1turn)
     }
 }
+
+.scrollable-container {
+    max-height: 65vh;
+    overflow: auto;
+}
+
+.scrollable-container::-webkit-scrollbar {
+    width: 8px;
+    /* Width of the scrollbar */
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: #b8b2b2;
+    /* Track color */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background-color: #47478c;
+    /* Scrollbar color */
+    border-radius: 10px;
+    /* Rounded edges */
+}
+
+/* color:452e7a  extra color */

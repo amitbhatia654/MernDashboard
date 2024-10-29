@@ -20,8 +20,14 @@ export default function SideNav({ isOpen }) {
   return (
     <>
       <Box
-        sx={{ mx: 1, my: 1 }}
-        backgroundColor={`${location.pathname == "/" ? "grey" : ""}`}
+        sx={{
+          mx: 1,
+          my: 1,
+          p: 1,
+          boxShadow: "0px 8px 18px rgba(0, 0, 0, 0.3)",
+          borderRadius: "8px",
+        }}
+        // backgroundColor={`${location.pathname == "/" ? "#4eaefc" : ""}`}
       >
         <Link
           to={"/"}
@@ -29,7 +35,8 @@ export default function SideNav({ isOpen }) {
             textDecoration: "none",
             textTransform: "capitalize",
             fontSize: "17px",
-            color: "black",
+            // color: "black",
+            color: `${location.pathname == "/" ? "blue" : "black"}`,
           }}
         >
           {/* {data?.logo} */}
@@ -44,13 +51,19 @@ export default function SideNav({ isOpen }) {
       </Box>
       {routes.map((data, index) => {
         return (
-          <div key={index}>
+          <div key={index} className="menu-items">
             <Box
-              sx={{ mx: 1, my: 2 }}
+              sx={{
+                mx: 1,
+                my: 1,
+                p: 1,
+                boxShadow: "0px 8px 18px rgba(0, 0, 0, 0.3)",
+                borderRadius: "8px",
+              }}
               index={index}
-              backgroundColor={`${
-                location.pathname.slice(1) == data.path ? "grey" : ""
-              }`}
+              // backgroundColor={`${
+              //   location.pathname.slice(1) == data.path ? "#383838" : ""
+              // }`}
             >
               <Link
                 to={data?.path}
@@ -58,7 +71,9 @@ export default function SideNav({ isOpen }) {
                   textDecoration: "none",
                   textTransform: "capitalize",
                   fontSize: "15px",
-                  color: "black",
+                  color: `${
+                    location.pathname.slice(1) == data.path ? "blue" : "black"
+                  }`,
                 }}
               >
                 <span> {data?.logo}</span>
