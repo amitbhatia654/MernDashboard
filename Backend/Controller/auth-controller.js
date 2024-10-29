@@ -1,4 +1,5 @@
 const User = require("../Models/UserModel")
+const Employee = require("../Models/EmployeeModel")
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 
@@ -18,6 +19,67 @@ const login = async (req, res) => {
 
     }
 }
+
+const AddEmployee = async (req, res) => {
+    try {
+        const { empName, empEmail, empPhone, empDepartment, empAddress } = req.body
+        const Res = await Employee.create({ empName, empPhone, empEmail, empDepartment, empAddress })
+        res.status(200).send("New Employee Added Succesfully")
+    } catch (error) {
+        console.log('Add Employee error', error)
+    }
+}
+
+
+const getAllEmployee = async (req, res) => {
+    try {
+        const response = await Employee.find()
+        console.log(res, 'get res')
+        res.status(200).send(response)
+
+    } catch (error) {
+
+    }
+}
+
+const getEmployeeById = async (req, res) => {
+    try {
+        const response = await Employee.findOne({ _id: req.params.id })
+        console.log(response, 'get res')
+        res.status(200).send(response)
+
+    } catch (error) {
+
+    }
+}
+
+const updateEmployee = async (req, res) => {
+    try {
+        const response = await Employee.findByIdAndUpdate(req.body._id, req.body)
+        res.status(200).send("Employee updated succesfully")
+
+    } catch (error) {
+        res.status(203).send("Employee Not Updated")
+    }
+}
+
+
+
+const deleteEmployee = async (req, res) => {
+    try {
+        console.log(req.params.id, 'id is ')
+        const deletedEmployee = await Employee.findOneAndDelete({ _id: req.params.id });
+        console.log(deleteEmployee, 'delted emp')
+        if (!deletedEmployee) {
+            return res.status(404).send({ message: 'Employee not deleted' });
+        }
+        res.status(200).send({ message: 'Employee deleted successfully', data: deletedEmployee });
+
+    } catch (error) {
+        console.error('Error deleting employee:', error);
+        res.status(500).send({ message: 'Failed to delete employee' });
+    }
+};
 
 
 
@@ -59,4 +121,7 @@ const profile = async (req, res) => {
 
 
 
-module.exports = { login, register, profile }
+module.exports = {
+    login, register, profile, AddEmployee, getAllEmployee, getEmployeeById, updateEmployee,
+    deleteEmployee
+}

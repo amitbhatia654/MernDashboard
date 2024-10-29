@@ -1,18 +1,12 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  TableContainer,
-  TextField,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Button, Grid, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { ErrorMessage, Form, Formik } from "formik";
 import { Label } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { addEmployee } from "../../assets/FormSchema";
+import axiosInstance from "../../ApiManager";
 
 export default function CreateEmployeeData() {
   const navigate = useNavigate();
@@ -22,25 +16,23 @@ export default function CreateEmployeeData() {
   const [data, setData] = useState({});
 
   const handleSubmit = async (values) => {
-    // setloading(true);
-    // const res = id
-    //   ? await firebase.UpdatePost(id, values)
-    //   : await firebase.createEmployee(values);
-    // setloading(false);
-    // console.log(res, "the response is");
-    // if (id) {
-    //   toast.success(res);
-    // } else {
-    //   toast.success("Employee added Successfully");
-    // }
-    // navigate("/employees");
+    setloading(true);
+    const res = id
+      ? await axiosInstance.put(`/api/employee/${id}`, values)
+      : await axiosInstance.post(`/api/employee`, values);
+
+    setloading(false);
+    if (res.status == 200) {
+      toast.success(res.data);
+      navigate("/employees");
+    }
   };
 
   const getEmpById = async () => {
-    const result = await firebase.getPostbyId(id);
+    const result = await axiosInstance.get(`/api/employee/${id}`);
     console.log(result, "result");
     if (result) {
-      setData(result);
+      setData(result.data);
     } else {
       setData({});
     }

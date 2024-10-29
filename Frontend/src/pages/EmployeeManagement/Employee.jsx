@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { Box, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import toast from "react-hot-toast";
+import axiosInstance from "../../ApiManager";
 
 export default function Employee() {
   const [allemployee, setAllEmployee] = useState([]);
@@ -19,9 +19,8 @@ export default function Employee() {
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    // firebase.getAllPosts().then((data) => {
-    //   setAllEmployee(data.docs);
-    // });
+    const res = await axiosInstance.get("/api/employee");
+    setAllEmployee(res.data);
   };
 
   const handleEdit = (id) => {
@@ -29,10 +28,11 @@ export default function Employee() {
   };
 
   const handleDelete = async (id) => {
-    const res = await firebase.deletePost(id);
-    if (res) {
-      toast.success(res);
-      setAllEmployee(allemployee.filter((data) => data.id != id));
+    console.log(id);
+    const res = await axiosInstance.delete(`/api/employee/${id}`);
+    if (res.status == 200) {
+      toast.success(res.data.message);
+      setAllEmployee(allemployee.filter((data) => data._id != id));
     }
   };
 
@@ -44,7 +44,6 @@ export default function Employee() {
     <Box
       sx={{ m: 2 }}
       boxShadow="0px 5px 8px rgba(0, 0, 0, 0.1)"
-      //   borderRadius={8}
     >
       <Box display={"flex"} justifyContent={"space-between"}>
         <Box component={"h2"} sx={{ my: 2 }}>
@@ -77,21 +76,23 @@ export default function Employee() {
             {allemployee.length >= 0 ? (
               allemployee?.map((row, index) => (
                 <TableRow
-                  key={row.data()?.empName}
-                  // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  key={index}
                 >
                   <TableCell>{index + 1}</TableCell>
-                  <TableCell>{row.data().empName}</TableCell>
-                  <TableCell>{row?.data().empEmail}</TableCell>
-                  <TableCell>{row?.data().empPhone}</TableCell>
-                  <TableCell>{row?.data().empDepartment}</TableCell>
-                  <TableCell>{row?.data().empAddress}</TableCell>
+                  <TableCell>{row?.empName}</TableCell>
+                  <TableCell>{row?.empEmail}</TableCell>
+                  <TableCell>{row?.empPhone}</TableCell>
+                  <TableCell>{row?.empDepartment}</TableCell>
+                  <TableCell>
+                    {row?.empAddress}
+                    {console.log(row, "the ror ")}
+                  </TableCell>
                   <TableCell>
                     <Grid container>
                       <Grid item lg={4}>
                         <button
                           type="button"
-                          onClick={() => handleEdit(row.id)}
+                          onClick={() => handleEdit(row._id)}
                         >
                           <BorderColorIcon />
                         </button>
@@ -99,8 +100,7 @@ export default function Employee() {
                       <Grid item lg={4}>
                         <button
                           type="button"
-                          onClick={() => handleDelete(row.id)}
-                          // style={{ backgroundColor: "grey" }}
+                          onClick={() => handleDelete(row._id)}
                         >
                           <DeleteIcon />
                         </button>
