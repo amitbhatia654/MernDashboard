@@ -45,7 +45,7 @@ export default function CreateEmployeeData() {
     <>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item>
-          <button>
+          <button style={{ cursor: "pointer" }}>
             <KeyboardBackspaceIcon
               onClick={() => navigate("/employees")}
             ></KeyboardBackspaceIcon>

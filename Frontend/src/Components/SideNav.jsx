@@ -34,12 +34,10 @@ export default function SideNav({ isOpen }) {
           style={{
             textDecoration: "none",
             textTransform: "capitalize",
-            fontSize: "17px",
-            // color: "black",
+            fontSize: "16px",
             color: `${location.pathname == "/" ? "blue" : "black"}`,
           }}
         >
-          {/* {data?.logo} */}
           <WidgetsIcon />
           <Box
             component={"span"}
@@ -61,16 +59,13 @@ export default function SideNav({ isOpen }) {
                 borderRadius: "8px",
               }}
               index={index}
-              // backgroundColor={`${
-              //   location.pathname.slice(1) == data.path ? "#383838" : ""
-              // }`}
             >
               <Link
                 to={data?.path}
                 style={{
                   textDecoration: "none",
                   textTransform: "capitalize",
-                  fontSize: "15px",
+                  fontSize: "16px",
                   color: `${
                     location.pathname.slice(1) == data.path ? "blue" : "black"
                   }`,
