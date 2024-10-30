@@ -12,15 +12,19 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import toast from "react-hot-toast";
 import axiosInstance from "../../ApiManager";
+import noResult from "../../images/no-results3.jpeg";
 
 export default function Employee() {
   const [allemployee, setAllEmployee] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const fetchData = async () => {
+    setLoading(true);
     const res = await axiosInstance.get("/api/employee");
-    setAllEmployee(res.data);
+    if (res.status == 200) setAllEmployee(res.data);
+    setLoading(false);
   };
 
   const handleEdit = (id) => {
@@ -28,7 +32,6 @@ export default function Employee() {
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
     const res = await axiosInstance.delete(`/api/employee/${id}`);
     if (res.status == 200) {
       toast.success(res.data.message);
@@ -53,7 +56,6 @@ export default function Employee() {
             my: 1,
             color: "#47478c",
             backgroundColor: "white",
-            // fontWeight: "bold",
             fontSize: "16px",
           }}
           onClick={() => navigate("/add-new-employee")}
@@ -70,7 +72,6 @@ export default function Employee() {
               color: "wheat",
               position: "sticky",
               top: 0,
-              // zIndex: 1,
             }}
           >
             <TableRow>
@@ -84,7 +85,22 @@ export default function Employee() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {allemployee.length >= 0 ? (
+            {loading ? (
+              <TableCell colSpan={8}>
+                {" "}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "300px",
+                    textAlign: "center",
+                  }}
+                >
+                  <div className="loader"></div>
+                </div>
+              </TableCell>
+            ) : allemployee.length > 0 ? (
               allemployee?.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
@@ -98,7 +114,7 @@ export default function Employee() {
                       <Grid item lg={4}>
                         <button
                           type="button"
-                          style={{ color: "#47478c" }}
+                          style={{ color: "#47478c", cursor: "pointer" }}
                           onClick={() => handleEdit(row._id)}
                         >
                           <BorderColorIcon />
@@ -106,7 +122,7 @@ export default function Employee() {
                       </Grid>
                       <Grid item lg={4}>
                         <button
-                          style={{ color: "#47478c" }}
+                          style={{ color: "#47478c", cursor: "pointer" }}
                           type="button"
                           onClick={() => handleDelete(row._id)}
                         >
@@ -119,16 +135,23 @@ export default function Employee() {
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  style={{
-                    border: "2px solid black",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  colSpan={12}
-                >
-                  {" "}
-                  <div className="loader"></div>
+                <TableCell colSpan={8}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "300px",
+                      textAlign: "center",
+                    }}
+                  >
+                    <img
+                      src={noResult}
+                      alt="No Result Image"
+                      height="250px"
+                      width="300px"
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             )}

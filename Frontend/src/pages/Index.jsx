@@ -20,7 +20,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
-import user from "../images/user.jpg";
+import user from "../images/dp.jpeg";
 import toast from "react-hot-toast";
 
 export default function Index() {
