@@ -46,7 +46,7 @@ export default function Employee() {
   return (
     <Box sx={{ m: 1, p: 2 }} boxShadow="0px 5px 8px rgba(0, 0, 0, 0.1)">
       <Box display={"flex"} justifyContent={"space-between"}>
-        <Box component={"h2"} sx={{ my: 0 }}>
+        <Box component={"h3"} sx={{ my: 0 }}>
           EMPLOYEES{" "}
         </Box>
 

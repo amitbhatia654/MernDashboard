@@ -34,18 +34,16 @@ const AddEmployee = async (req, res) => {
 const getAllEmployee = async (req, res) => {
     try {
         const response = await Employee.find()
-        console.log(res, 'get res')
         res.status(200).send(response)
 
     } catch (error) {
-
+        res.status(205).send("data not found")
     }
 }
 
 const getEmployeeById = async (req, res) => {
     try {
         const response = await Employee.findOne({ _id: req.params.id })
-        console.log(response, 'get res')
         res.status(200).send(response)
 
     } catch (error) {
@@ -67,9 +65,7 @@ const updateEmployee = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
     try {
-        console.log(req.params.id, 'id is ')
         const deletedEmployee = await Employee.findOneAndDelete({ _id: req.params.id });
-        console.log(deleteEmployee, 'delted emp')
         if (!deletedEmployee) {
             return res.status(404).send({ message: 'Employee not deleted' });
         }

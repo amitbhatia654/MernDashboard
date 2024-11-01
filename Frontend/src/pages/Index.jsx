@@ -3,6 +3,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   Grid,
   IconButton,
   Menu,
@@ -19,6 +20,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import CloseIcon from "@mui/icons-material/Close";
 
 import user from "../images/dp.jpeg";
 import toast from "react-hot-toast";
@@ -141,8 +143,19 @@ export default function Index() {
         </Box>
         <Box className="homepage " sx={{ borderTop: 2 }}>
           <Grid item lg={4} md={4} sm={4} xs={4}>
-            <button onClick={() => setIsOpen(!isOpen)}>
-              {<MenuIcon fontSize="small" />}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              style={{
+                color: "blue",
+                // backgroundColor: "white",
+                fontSize: "16px",
+              }}
+            >
+              {isOpen ? (
+                <MenuIcon fontSize="small" />
+              ) : (
+                <CloseIcon fontSize="small" />
+              )}
             </button>
           </Grid>
           <div className="">
