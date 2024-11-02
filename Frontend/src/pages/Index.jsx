@@ -48,7 +48,7 @@ export default function Index() {
       >
         <Box
           sx={{
-            color: "#5301FF",
+            color: "#47478C",
             fontSize: "26px",
             fontWeight: "bold",
             m: 2,
@@ -107,7 +107,7 @@ export default function Index() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            <MenuItem>
+            <MenuItem onClick={handleCloseUserMenu}>
               <Typography
                 textAlign="center"
                 onClick={() => {
@@ -148,7 +148,8 @@ export default function Index() {
               style={{
                 color: "blue",
                 // backgroundColor: "white",
-                fontSize: "16px",
+                border: "1px solid white",
+                fontSize: "18px",
               }}
             >
               {isOpen ? (

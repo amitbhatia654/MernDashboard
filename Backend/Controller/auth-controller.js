@@ -33,8 +33,19 @@ const AddEmployee = async (req, res) => {
 
 const getAllEmployee = async (req, res) => {
     try {
-        const response = await Employee.find()
-        res.status(200).send(response)
+        let search = req.query.search
+        let rowSize = parseInt(req.query.rowSize) || 6;
+        let page = parseInt(req.query.currentPage) || 1; // Default to page 1
+        let skip = (page - 1) * rowSize;
+        
+        const query = search
+            ? { empName: { $regex: search, $options: "i" } }
+            : {};
+
+        const response = await Employee.find(query).skip(skip).limit(rowSize)
+        const totalCount = await Employee.countDocuments(query);
+
+        res.status(200).json({ response, totalCount })
 
     } catch (error) {
         res.status(205).send("data not found")

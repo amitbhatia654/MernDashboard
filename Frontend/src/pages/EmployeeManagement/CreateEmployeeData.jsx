@@ -1,4 +1,10 @@
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -78,117 +84,164 @@ export default function CreateEmployeeData() {
                 <KeyboardBackspaceIcon></KeyboardBackspaceIcon>
               </Button>
               <div className="d-flex justify-content-center ">
-                <h2 className="text-decoration-underline">
+                <h2
+                  className="text-decoration-underline"
+                  style={{ color: "#47478C" }}
+                >
                   {id ? "Edit" : "Add"} Employee Details
                 </h2>
               </div>
               <div className="container p-3">
                 <div className="row">
-                  <div className="col-md-4 ">
-                    <TextField
+                  <div className="col-md-4">
+                    <FormControl
+                      fullWidth
+                      variant="outlined"
+                      size="small"
+                      sx={{ m: 1 }}
+                    >
+                      <InputLabel
+                        shrink={Boolean(props.values.empName)}
+                        htmlFor="empName"
+                      >
+                        Name
+                      </InputLabel>
+                      <OutlinedInput
+                        id="empName"
+                        name="empName"
+                        placeholder="enter name"
+                        value={props.values.empName}
+                        onChange={props.handleChange}
+                        label="Name"
+                      />
+                    </FormControl>
+                    <ErrorMessage
                       name="empName"
-                      id="outlined-basic"
-                      size="small"
-                      label={props.values.empName ? "" : "Name"}
-                      fullWidth={true}
-                      placeholder="enter name"
-                      value={props.values.empName}
-                      onChange={props.handleChange}
-                      variant="outlined"
-                      sx={{ m: 1 }}
-                    />
-                    <ErrorMessage
-                      name="empName"
                       component={"div"}
                       className="text-danger"
                     ></ErrorMessage>
                   </div>
 
                   <div className="col-md-4">
-                    <TextField
-                      name="empEmail"
-                      size="small"
-                      fullWidth={true}
-                      id="outlined-basic"
-                      value={props.values.empEmail}
-                      label={props.values.empEmail ? "" : "Email"}
-                      placeholder="enter email"
-                      type="email"
-                      onChange={props.handleChange}
+                    <FormControl
+                      fullWidth
                       variant="outlined"
+                      size="small"
                       sx={{ m: 1 }}
-                    />
+                    >
+                      <InputLabel
+                        shrink={Boolean(props.values.empEmail)} // Label stays at the top when there's a value
+                        htmlFor="empEmail"
+                      >
+                        Email
+                      </InputLabel>
+                      <OutlinedInput
+                        id="empEmail"
+                        name="empEmail"
+                        placeholder="enter email"
+                        type="email"
+                        value={props.values.empEmail}
+                        onChange={props.handleChange}
+                        label="Email" // Links InputLabel with OutlinedInput
+                      />
+                    </FormControl>
                     <ErrorMessage
                       name="empEmail"
-                      component={"div"}
+                      component="div"
                       className="text-danger"
-                    ></ErrorMessage>
+                    />
                   </div>
 
                   <div className="col-md-4">
-                    <TextField
-                      name="empPhone"
-                      id="outlined-basic"
-                      size="small"
-                      placeholder="enter phone number"
-                      label={props.values.empPhone ? "" : "Phone Number"}
-                      fullWidth={true}
-                      type="number"
-                      value={props.values.empPhone}
-                      onChange={(e) => {
-                        if (e.target.value.length <= 10) {
-                          props.setFieldValue("empPhone", e.target.value);
-                        }
-                      }}
+                    <FormControl
+                      fullWidth
                       variant="outlined"
+                      size="small"
                       sx={{ m: 1 }}
-                    />
+                    >
+                      <InputLabel
+                        shrink={Boolean(props.values.empPhone)} // Keeps label at the top when there's a value
+                        htmlFor="empPhone"
+                      >
+                        Phone Number
+                      </InputLabel>
+                      <OutlinedInput
+                        id="empPhone"
+                        name="empPhone"
+                        placeholder="enter phone number"
+                        type="number"
+                        value={props.values.empPhone}
+                        onChange={(e) => {
+                          if (e.target.value.length <= 10) {
+                            props.setFieldValue("empPhone", e.target.value);
+                          }
+                        }}
+                        label="Phone Number" // Links InputLabel with OutlinedInput
+                      />
+                    </FormControl>
                     <ErrorMessage
                       name="empPhone"
-                      component={"div"}
+                      component="div"
                       className="text-danger"
-                    ></ErrorMessage>
+                    />
                   </div>
 
                   <div className="col-md-4">
-                    <TextField
-                      name="empDepartment"
-                      id="outlined-basic"
-                      size="small"
-                      label={props.values.empDepartment ? "" : "Department"}
-                      fullWidth={true}
-                      placeholder="enter department"
-                      onChange={props.handleChange}
-                      value={props.values.empDepartment}
+                    <FormControl
+                      fullWidth
                       variant="outlined"
+                      size="small"
                       sx={{ m: 1 }}
-                    />
+                    >
+                      <InputLabel
+                        shrink={Boolean(props.values.empDepartment)} // Keeps label at the top when there's a value
+                        htmlFor="empDepartment"
+                      >
+                        Department
+                      </InputLabel>
+                      <OutlinedInput
+                        id="empDepartment"
+                        name="empDepartment"
+                        placeholder="enter department"
+                        value={props.values.empDepartment}
+                        onChange={props.handleChange}
+                        label="Department" // Links InputLabel with OutlinedInput
+                      />
+                    </FormControl>
                     <ErrorMessage
                       name="empDepartment"
-                      component={"div"}
+                      component="div"
                       className="text-danger"
-                    ></ErrorMessage>
+                    />
                   </div>
 
                   <div className="col-md-4">
-                    <TextField
-                      name="empAddress"
-                      id="outlined-basic"
-                      size="small"
-                      placeholder="enter address"
-                      label={props.values.empAddress ? "" : "Address"}
-                      fullWidth={true}
-                      onChange={props.handleChange}
-                      value={props.values.empAddress}
+                    <FormControl
+                      fullWidth
                       variant="outlined"
-                      sx={{ m: 1, width: "100%" }}
-                    />
-
+                      size="small"
+                      sx={{ m: 1 }}
+                    >
+                      <InputLabel
+                        shrink={Boolean(props.values.empAddress)}
+                        htmlFor="empAddress"
+                      >
+                        Address
+                      </InputLabel>
+                      <OutlinedInput
+                        id="empAddress"
+                        name="empAddress"
+                        placeholder="enter address"
+                        value={props.values.empAddress}
+                        onChange={props.handleChange}
+                        label="Address"
+                      />
+                    </FormControl>
                     <ErrorMessage
                       name="empAddress"
-                      component={"div"}
+                      component="div"
                       className="text-danger"
-                    ></ErrorMessage>
+                    />
                   </div>
 
                   <div className="d-flex justify-content-center my-5">
@@ -202,7 +255,6 @@ export default function CreateEmployeeData() {
                         fontSize: "16px",
                       }}
                       disabled={loading}
-                      // onClick={() => navigate("/add-new-employee")}
                     >
                       Submit
                     </Button>
