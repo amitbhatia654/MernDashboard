@@ -57,7 +57,7 @@ export default function Employee() {
   }, [search, rowSize, currentPage]);
 
   return (
-    <Box sx={{ m: 1, p: 2 }} boxShadow="0px 5px 8px rgba(0, 0, 0, 0.1)">
+    <Box sx={{ m: 1, p: 2 }} boxShadow="0px 5px 8px rgba(0, 0, 0, 0.2)">
       <Box display={"flex"} justifyContent={"space-between"}>
         <Box component={"h4"} sx={{ my: 0, color: "#47478C" }}>
           All EMPLOYEES{" "}
@@ -128,37 +128,37 @@ export default function Employee() {
               allemployee?.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell
-                    style={{ boxShadow: "0px 3px 9px rgba(0 ,0 ,0 ,0.2)" }}
+                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                   >
                     {(currentPage - 1) * rowSize + index + 1}
                   </TableCell>
                   <TableCell
-                    style={{ boxShadow: "0px 3px 9px rgba(0 ,0 ,0 ,0.2)" }}
+                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                   >
                     {row?.empName}
                   </TableCell>
                   <TableCell
-                    style={{ boxShadow: "0px 3px 9px rgba(0 ,0 ,0 ,0.2)" }}
+                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                   >
                     {row?.empEmail}
                   </TableCell>
                   <TableCell
-                    style={{ boxShadow: "0px 3px 9px rgba(0 ,0 ,0 ,0.2)" }}
+                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                   >
                     {row?.empPhone}
                   </TableCell>
                   <TableCell
-                    style={{ boxShadow: "0px 3px 9px rgba(0 ,0 ,0 ,0.2)" }}
+                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                   >
                     {row?.empDepartment}
                   </TableCell>
                   <TableCell
-                    style={{ boxShadow: "0px 3px 9px rgba(0 ,0 ,0 ,0.2)" }}
+                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                   >
                     {row?.empAddress}
                   </TableCell>
                   <TableCell
-                    style={{ boxShadow: "0px 3px 9px rgba(0 ,0 ,0 ,0.2)" }}
+                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                   >
                     <Grid container>
                       <Grid item lg={4}>

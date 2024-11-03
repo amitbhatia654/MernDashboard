@@ -68,7 +68,8 @@ export default function CreateEmployeeData() {
             <div
               className="m-3 p-2 mt-4"
               style={{
-                boxShadow: "0px 3px 9px rgba(0, 0, 0, 0.5)",
+                boxShadow: "0px 5px 8px rgba(0, 0, 0, 0.2)",
+                minHeight: "77vh",
               }}
             >
               <Button
