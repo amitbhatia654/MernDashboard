@@ -16,8 +16,8 @@
     "@mui/icons-material": "^6.1.5",
     "@mui/material": "^6.1.5",
     "@mui/styled-engine-sc": "^6.1.5",
+    "@mui/x-charts": "^7.22.1",
     "axios": "^1.7.7",
-  
     "dotenv": "^16.4.5",
     "formik": "^2.4.6",
     "framer-motion": "^11.11.9",
