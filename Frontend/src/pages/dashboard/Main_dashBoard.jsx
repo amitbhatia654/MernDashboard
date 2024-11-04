@@ -105,7 +105,7 @@ export default function Main_dashBoard() {
   return (
     <>
       <div
-        className="container scrollable-container"
+        className="container-fluid scrollable-container"
         style={{ maxHeight: "83vh" }}
       >
         <div className="row">

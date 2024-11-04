@@ -16,6 +16,7 @@ export default function SideNav({ isOpen }) {
     { path: "employees", logo: <ContactEmergencyIcon /> },
     { path: "customers", logo: <PeopleIcon /> },
     { path: "orders", logo: <GradingIcon /> },
+    { path: "settings", logo: <GradingIcon /> },
   ];
   return (
     <>
