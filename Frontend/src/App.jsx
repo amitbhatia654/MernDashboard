@@ -9,6 +9,7 @@ import CreateEmployeeData from "./pages/EmployeeManagement/CreateEmployeeData";
 import PrivateRoute from "./pages/PrivateRoute";
 import SignUp from "./pages/EmployeeManagement/SignUp";
 import MyProfile from "./pages/MyProfile";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const isUserLogin = () => {
@@ -60,7 +61,7 @@ function App() {
         </Route>
         <Route
           path="/*"
-          element={<h3> Something Went Wrong or No Route Found</h3>}
+          element={<ErrorPage/>}
         ></Route>
       </Routes>
       <Toaster />
