@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { add } from "../reduxStore/UserSlice";
 
 import {
   Flex,
@@ -28,6 +30,7 @@ const LoginSignupPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleShowClick = () => setShowPassword(!showPassword);
 
@@ -42,7 +45,12 @@ const LoginSignupPage = () => {
       }
     );
 
-    if (res.status == 200) localStorage.setItem("token", res.data.token);
+    if (res.status == 200) {
+      const user = { id: res.data.user._id, name: res.data.user.name };
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(user));
+      dispatch(add(user));
+    }
 
     setLoading(false);
     if (res.status == 203) setError(true);

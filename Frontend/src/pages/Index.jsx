@@ -3,12 +3,10 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   Grid,
   IconButton,
   Menu,
   MenuItem,
-  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -17,18 +15,22 @@ import React, { useState } from "react";
 import SideNav from "../components/SideNav";
 import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CloseIcon from "@mui/icons-material/Close";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import user from "../images/dp.jpeg";
 import toast from "react-hot-toast";
+import { remove } from "../reduxStore/UserSlice";
 
 export default function Index() {
   const [isOpen, setIsOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.cart);
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -40,32 +42,22 @@ export default function Index() {
 
   return (
     <>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        // width={"100%"}
-        sx={{ width: "100%" }}
-      >
+      <Box display="flex" justifyContent="space-between" sx={{ width: "100%" }}>
         <Box
           sx={{
             color: "#47478C",
             fontSize: "26px",
             fontWeight: "bold",
-            m: 2,
+            m: 1,
           }}
         >
           DashBoard{" "}
         </Box>
-        {/* <div>
-          <TextField
-            // sx={{ width: "360px" }}
-            variant="standard"
-            placeholder="Search .."
-          />
-          <SearchIcon sx={{ fontSize: 22 }}></SearchIcon>{" "}
-        </div> */}
+
         <div>
-          <Box display={{ xs: "none", sm: "none", lg: "inline", md: "inline" }}>
+          <Box
+            display={{ xs: "inline", sm: "inline", lg: "inline", md: "inline" }}
+          >
             <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -86,6 +78,16 @@ export default function Index() {
               </Badge>
             </IconButton>
           </Box>
+          <span
+            className="fs-6 p-2 "
+            style={{ boxShadow: "0px 1px 3px 2px rgba(0,0,0,0.2)" }}
+          >
+            {" "}
+            Welcome😊{" "}
+            <span className="fw-bold " style={{ color: "#47478C" }}>
+              {userData?.name?.toUpperCase() ?? "user"}
+            </span>
+          </span>
 
           <Tooltip title="My Profile" placement="left-end">
             <IconButton onClick={handleOpenUserMenu} sx={{ mx: 2 }}>
@@ -123,7 +125,9 @@ export default function Index() {
                 textAlign="center"
                 onClick={async () => {
                   navigate("/login");
-                  localStorage.setItem("token", "");
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("user");
+                  dispatch(remove());
                 }}
               >
                 Logout

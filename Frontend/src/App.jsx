@@ -10,6 +10,7 @@ import PrivateRoute from "./pages/PrivateRoute";
 import SignUp from "./pages/EmployeeManagement/SignUp";
 import MyProfile from "./pages/MyProfile";
 import ErrorPage from "./pages/ErrorPage";
+import Customers from "./pages/Customers";
 
 function App() {
   const isUserLogin = () => {
@@ -56,13 +57,10 @@ function App() {
             path="/add-new-employee"
             element={<CreateEmployeeData />}
           ></Route>
-          <Route path="customers" element={<h2>Emloyees Data</h2>}></Route>
+          <Route path="customers" element={<Customers />}></Route>
           <Route path="orders" element={<h2>Order Data</h2>}></Route>
         </Route>
-        <Route
-          path="/*"
-          element={<ErrorPage/>}
-        ></Route>
+        <Route path="/*" element={<ErrorPage />}></Route>
       </Routes>
       <Toaster />
     </>

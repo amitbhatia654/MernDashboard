@@ -11,7 +11,7 @@ const login = async (req, res) => {
         }
 
         token = jwt.sign({ email: user.email }, process.env.secretKey, { expiresIn: "24hr" })
-        return res.status(200).json({ message: "User Log In succesfully", token })
+        return res.status(200).json({ message: "User Log In succesfully", token, user })
     }
 
     catch (error) {
@@ -37,7 +37,7 @@ const getAllEmployee = async (req, res) => {
         let rowSize = parseInt(req.query.rowSize) || 6;
         let page = parseInt(req.query.currentPage) || 1; // Default to page 1
         let skip = (page - 1) * rowSize;
-        
+
         const query = search
             ? { empName: { $regex: search, $options: "i" } }
             : {};
