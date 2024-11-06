@@ -42,22 +42,21 @@ export default function Index() {
 
   return (
     <>
-      <Box display="flex" justifyContent="space-between" sx={{ width: "100%" }}>
-        <Box
-          sx={{
+      <div className="d-flex">
+        <div
+          style={{
             color: "#47478C",
             fontSize: "26px",
             fontWeight: "bold",
-            m: 1,
+            margin: "7px",
+            width: "195px",
           }}
         >
-          DashBoard{" "}
-        </Box>
+          DashBoard
+        </div>
 
-        <div>
-          <Box
-            display={{ xs: "inline", sm: "inline", lg: "inline", md: "inline" }}
-          >
+        <div className="d-flex justify-content-end w-100">
+          <div className=" my-1 ">
             <IconButton
               size="large"
               aria-label="show 4 new mails"
@@ -77,83 +76,75 @@ export default function Index() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-          </Box>
-          <span
-            className="fs-6 p-2 "
-            style={{ boxShadow: "0px 1px 3px 2px rgba(0,0,0,0.2)" }}
-          >
-            {" "}
-            Welcome😊{" "}
-            <span className="fw-bold " style={{ color: "#47478C" }}>
-              {userData?.name?.toUpperCase() ?? "user"}
-            </span>
-          </span>
+          </div>
 
-          <Tooltip title="My Profile" placement="left-end">
-            <IconButton onClick={handleOpenUserMenu} sx={{ mx: 2 }}>
-              <Avatar alt="Aemy Sharp" src={user} />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Typography
-                textAlign="center"
-                onClick={() => {
-                  navigate("/profile");
-                }}
-              >
-                Profile
-              </Typography>
-            </MenuItem>
+          <div className="">
+            <Tooltip title="My Profile" placement="bottom-end">
+              <IconButton onClick={handleOpenUserMenu}>
+                <span className="fs-6 fw-bold text-dark">
+                  {" "}
+                  {userData?.name.split(" ")[0]?.toUpperCase() ?? "user"}
+                </span>
+                <Avatar alt="User Image" src={user} className="mx-2" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography
+                  textAlign="center"
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
+                >
+                  Profile
+                </Typography>
+              </MenuItem>
 
-            <MenuItem>
-              <Typography
-                textAlign="center"
-                onClick={async () => {
-                  navigate("/login");
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("user");
-                  dispatch(remove());
-                }}
-              >
-                Logout
-              </Typography>
-            </MenuItem>
-          </Menu>
+              <MenuItem>
+                <Typography
+                  textAlign="center"
+                  onClick={async () => {
+                    navigate("/login");
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                    dispatch(remove());
+                  }}
+                >
+                  Logout
+                </Typography>
+              </MenuItem>
+            </Menu>
+          </div>
         </div>
-      </Box>
+      </div>
 
-      <div className="main-div ">
-        <Box
+      <div className="d-flex ">
+        <div
           className={!isOpen ? "sidenav-full" : "sidenav-small"}
-          sx={{ borderTop: 2, borderRight: 2 }}
+          style={{ borderTop: "2px solid", borderRight: "2px solid" }}
         >
-          {" "}
-          <SideNav isOpen={isOpen}></SideNav>
-        </Box>
-        <Box className="homepage " sx={{ borderTop: 2 }}>
-          <Grid item lg={4} md={4} sm={4} xs={4}>
+          <div className="d-flex justify-content-end">
             <button
               onClick={() => setIsOpen(!isOpen)}
               style={{
                 color: "blue",
                 // backgroundColor: "white",
                 border: "1px solid white",
-                fontSize: "18px",
+                fontSize: "14x",
               }}
             >
               {isOpen ? (
@@ -162,11 +153,37 @@ export default function Index() {
                 <CloseIcon fontSize="small" />
               )}
             </button>
-          </Grid>
-          <div className="">
+          </div>
+          <SideNav isOpen={isOpen}></SideNav>
+        </div>
+
+        <div
+          className="scrollable-container"
+          style={{ width: "100%", borderTop: "2px solid" }}
+        >
+          <div
+            className="scrollable-container box-shaddow-style"
+            style={{
+              minHeight: "83vh",
+              maxHeight: "83vh",
+              padding: "10px",
+              margin: "10px",
+            }}
+          >
             <Outlet></Outlet>
           </div>
-        </Box>
+        </div>
+      </div>
+      <div
+        className=" border-primary "
+        style={{
+          boxShadow: "0px 1px 3px 2px rgba(0,0,0,0.2)",
+          padding: "6px",
+        }}
+      >
+        <h6 className="text-center text-primary">
+          © 2024 | Custom Dashboard | All rights reserved
+        </h6>
       </div>
     </>
   );

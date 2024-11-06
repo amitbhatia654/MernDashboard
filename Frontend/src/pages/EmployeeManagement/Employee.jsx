@@ -57,7 +57,7 @@ export default function Employee() {
   }, [search, rowSize, currentPage]);
 
   return (
-    <Box sx={{ m: 1, p: 2 }} boxShadow="0px 5px 8px rgba(0, 0, 0, 0.2)">
+    <Box>
       <Box display={"flex"} justifyContent={"space-between"}>
         <Box component={"h4"} sx={{ my: 0, color: "#47478C" }}>
           All EMPLOYEES{" "}
@@ -88,7 +88,10 @@ export default function Employee() {
         </div>
       </Box>
 
-      <TableContainer className="scrollable-container">
+      <TableContainer
+        className="scrollable-container"
+        style={{ maxHeight: "62vh" }}
+      >
         <Table sx={{}} aria-label="simple table">
           <TableHead
             sx={{

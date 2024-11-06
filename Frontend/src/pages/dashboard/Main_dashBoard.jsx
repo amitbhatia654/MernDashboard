@@ -104,10 +104,7 @@ const valueFormatter = (value) => `${value}mm`;
 export default function Main_dashBoard() {
   return (
     <>
-      <div
-        className="container-fluid scrollable-container"
-        style={{ maxHeight: "83vh" }}
-      >
+      <div className="container-fluid scrollable-container">
         <div className="row">
           <div className="col-md-6">
             <h4 className="text-center">Sales Revenue</h4>

@@ -1,16 +1,33 @@
-import { useDispatch } from "react-redux";
-import { remove } from "../reduxStore/UserSlice";
-
 export default function Customers() {
-  const dispatch = useDispatch();
-  const RemoveReducer = () => {
-    dispatch(remove());
-  };
   return (
     <div>
       This is customer page
-      {/* <button onClick={() => ADDReducer()}>Add to redux</button> */}
-      <button onClick={() => RemoveReducer()}>Remove to redux</button>
+      <div className="border border-primary" style={{ marginTop: "100px" }}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
+        necessitatibus, eveniet a temporibus maiores suscipit enim. Accusantium
+        minima quibusdam neque possimus. Reprehenderit odio eveniet aperiam
+        tenetur similique officia distinctio quasi, labore blanditiis sunt
+        obcaecati id maxime, magnam iusto mollitia. Excepturi error, eum quod
+        nisi aut harum neque natus! Praesentium quidem odit natus reiciendis
+      </div>
+      <div className="border border-primary" style={{ marginTop: "100px" }}>
+        Dummy{" "}
+      </div>
+      <div className="border border-primary" style={{ marginTop: "100px" }}>
+        Dummy{" "}
+      </div>
+      <div className="border border-primary" style={{ marginTop: "100px" }}>
+        Dummy{" "}
+      </div>
+      <div className="border border-primary" style={{ marginTop: "100px" }}>
+        Dummy{" "}
+      </div>
+      <div className="border border-primary" style={{ marginTop: "100px" }}>
+        Dummy{" "}
+      </div>
+      <div className="border border-primary" style={{ marginTop: "100px" }}>
+        Dummy{" "}
+      </div>
     </div>
   );
 }

@@ -11,6 +11,8 @@ import SignUp from "./pages/EmployeeManagement/SignUp";
 import MyProfile from "./pages/MyProfile";
 import ErrorPage from "./pages/ErrorPage";
 import Customers from "./pages/Customers";
+import Order from "./pages/Order";
+import Setting from "./pages/Setting";
 
 function App() {
   const isUserLogin = () => {
@@ -58,7 +60,8 @@ function App() {
             element={<CreateEmployeeData />}
           ></Route>
           <Route path="customers" element={<Customers />}></Route>
-          <Route path="orders" element={<h2>Order Data</h2>}></Route>
+          <Route path="orders" element={<Order />}></Route>
+          <Route path="settings" element={<Setting />}></Route>
         </Route>
         <Route path="/*" element={<ErrorPage />}></Route>
       </Routes>
