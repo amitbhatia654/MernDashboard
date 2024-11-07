@@ -13,11 +13,19 @@ import ErrorPage from "./pages/ErrorPage";
 import Customers from "./pages/Customers";
 import Order from "./pages/Order";
 import Setting from "./pages/Setting";
+import { useEffect } from "react";
 
 function App() {
   const isUserLogin = () => {
     return Boolean(localStorage.getItem("token"));
   };
+
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--box-color",
+      localStorage.getItem("color")
+    );
+  }, []);
 
   // eslint-disable-next-line react/prop-types
   const ProtectedLoginRoute = ({ children }) => {
