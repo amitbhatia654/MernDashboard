@@ -25,8 +25,8 @@ export default function Setting() {
         Change Background Color{" "}
       </h2>
       <div
-        className="d-flex justify-content-center mt-3 p-4 "
-        style={{ boxShadow: "2px 1px 10px grey" }}
+        className="d-flex justify-content-center mt-4 p-4 "
+        style={{ boxShadow: "2px 1px 5px grey" }}
       >
         <div>
           <span className="fs-6 fw-bold ">Select Color </span>

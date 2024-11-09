@@ -89,7 +89,7 @@ export default function Employee() {
       </Box>
 
       <TableContainer
-        className="scrollable-container"
+        className="scrollable-container   "
         style={{ maxHeight: "62vh" }}
       >
         <Table sx={{}} aria-label="simple table">
@@ -222,7 +222,7 @@ export default function Employee() {
         </Table>
       </TableContainer>
 
-      <div className="d-flex justify-content-center mt-2 ">
+      <div className="d-flex justify-content-center mt-3 ">
         <span className="m-3">Rows Per Page</span>
         <TextField
           select

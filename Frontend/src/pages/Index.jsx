@@ -2,8 +2,6 @@
 import {
   Avatar,
   Badge,
-  Box,
-  Grid,
   IconButton,
   Menu,
   MenuItem,
@@ -13,16 +11,14 @@ import {
 
 import React, { useState } from "react";
 import SideNav from "../components/SideNav";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-
 import user from "../images/dp.jpeg";
-import toast from "react-hot-toast";
 import { remove } from "../reduxStore/UserSlice";
 
 export default function Index() {
@@ -46,9 +42,10 @@ export default function Index() {
         <div
           style={{
             color: "#47478C",
-            fontSize: "26px",
+            fontSize: "28px",
             fontWeight: "bold",
             margin: "7px",
+            marginLeft: "20px",
             width: "195px",
           }}
         >
@@ -81,11 +78,18 @@ export default function Index() {
           <div className="">
             <Tooltip title="My Profile" placement="bottom-end">
               <IconButton onClick={handleOpenUserMenu}>
-                <span className="fs-6 fw-bold text-dark">
+                <span
+                  className="fs-6 fw-bold text-primary "
+                  style={{
+                    boxShadow: "-2px 0px 2px white",
+                    padding: "8px",
+                    borderRadius: "50px",
+                  }}
+                >
                   {" "}
-                  {userData?.name.split(" ")[0]?.toUpperCase() ?? "user"}
+                  {userData?.name?.toUpperCase() ?? "user"}
                 </span>
-                <Avatar alt="User Image" src={user} className="mx-2" />
+                <Avatar alt="User Image" src={user} className="" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -114,6 +118,17 @@ export default function Index() {
                 </Typography>
               </MenuItem>
 
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography
+                  textAlign="center"
+                  onClick={() => {
+                    navigate("/settings");
+                  }}
+                >
+                  Settings
+                </Typography>
+              </MenuItem>
+
               <MenuItem>
                 <Typography
                   textAlign="center"
@@ -135,14 +150,16 @@ export default function Index() {
       <div className="d-flex ">
         <div
           className={!isOpen ? "sidenav-full" : "sidenav-small"}
-          style={{ borderTop: "2px solid", borderRight: "2px solid" }}
+          style={{
+            borderTop: "2px solid grey",
+            borderRight: "2px solid grey",
+          }}
         >
           <div className="d-flex justify-content-end">
             <button
               onClick={() => setIsOpen(!isOpen)}
               style={{
                 color: "blue",
-                // backgroundColor: "white",
                 border: "1px solid white",
                 fontSize: "14x",
               }}
@@ -159,15 +176,17 @@ export default function Index() {
 
         <div
           className="scrollable-container"
-          style={{ width: "100%", borderTop: "2px solid" }}
+          style={{
+            width: "100%",
+            borderTop: "2px solid grey",
+          }}
         >
           <div
-            className="scrollable-container box-shaddow-style"
+            className="scrollable-container "
             style={{
-              minHeight: "83vh",
-              maxHeight: "83vh",
-              padding: "10px",
-              margin: "10px",
+              minHeight: "87vh",
+              maxHeight: "87vh",
+              padding: "20px",
             }}
           >
             <Outlet></Outlet>
@@ -175,10 +194,9 @@ export default function Index() {
         </div>
       </div>
       <div
-        className=" border-primary "
         style={{
-          boxShadow: "0px 1px 3px 2px rgba(0,0,0,0.2)",
-          padding: "6px",
+          border: "1px solid #d6d4d4",
+          padding: "2px",
         }}
       >
         <h6 className="text-center " style={{ color: "#47478C" }}>
