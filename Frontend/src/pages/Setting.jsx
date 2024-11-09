@@ -20,34 +20,39 @@ export default function Setting() {
 
   return (
     <div>
-      <h2 className="text-center " style={{ textDecoration: "underline" }}>
+      <h2 className="text-center " style={{ textDecoration: "" }}>
         {" "}
         Change Background Color{" "}
       </h2>
-      <div className="d-flex justify-content-center">
+      <div
+        className="d-flex justify-content-center mt-3 p-4 "
+        style={{ boxShadow: "2px 1px 10px grey" }}
+      >
         <div>
-          <span className="fs-6 fw-bold mt-4">Select Color </span>
-          <br></br>
+          <span className="fs-6 fw-bold ">Select Color </span>
           <input
             type="color"
             value={color}
             onChange={changeColor}
             style={{
-              height: "70px",
-              width: "100px",
+              height: "20px",
+              width: "40px",
               cursor: "pointer",
               // border: "5px solid red",
               boxShadow: "2px 1px 10px grey",
               padding: "0px",
+              marginLeft: "5px",
+              marginRight: "15px",
             }}
           />
-          <br></br>
-
-          <span className="fs-6 fw-bold "> Set Default Color</span>
+        </div>
+        <div>
+          <span className="fs-6 fw-bold  "> Set Default Color</span>
           <input
             type="checkbox"
             onClick={(e) => setDefaultColor(e.target.checked)}
             checked={color == "#E7E7EE"}
+            style={{ marginLeft: "15px", transform: "scale(1.5)" }}
           />
         </div>
       </div>

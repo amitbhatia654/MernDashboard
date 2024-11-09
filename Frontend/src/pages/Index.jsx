@@ -181,7 +181,7 @@ export default function Index() {
           padding: "6px",
         }}
       >
-        <h6 className="text-center text-primary">
+        <h6 className="text-center " style={{ color: "#47478C" }}>
           © 2024 | Custom Dashboard | All rights reserved
         </h6>
       </div>
