@@ -89,10 +89,10 @@ export default function Employee() {
       </Box>
 
       <TableContainer
-        className="scrollable-container   "
+        className="scrollable-container"
         style={{ maxHeight: "62vh" }}
       >
-        <Table sx={{}} aria-label="simple table">
+        <Table aria-label="simple table">
           <TableHead
             sx={{
               backgroundColor: "#47478c",

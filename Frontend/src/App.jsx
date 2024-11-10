@@ -14,6 +14,7 @@ import Customers from "./pages/Customers";
 import Order from "./pages/Order";
 import Setting from "./pages/Setting";
 import { useEffect } from "react";
+import UserDetails from "./pages/Users/UsersDetails";
 
 function App() {
   const isUserLogin = () => {
@@ -61,6 +62,7 @@ function App() {
         ></Route>
         <Route path="/" element={<PrivateRoute />}>
           <Route index element={<Main_dashBoard></Main_dashBoard>}></Route>
+          <Route path="users" element={<UserDetails />}></Route>
           <Route path="employees" element={<Employee />}></Route>
           <Route path="profile" element={<MyProfile></MyProfile>}></Route>
           <Route

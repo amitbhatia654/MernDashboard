@@ -30,6 +30,16 @@ body {
     animation: l25 1s infinite linear;
 }
 
+@keyframes l25 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 
 
 /* if we want to use this scroll bar any where just add this class name and set max-height to that div whatever we want  */

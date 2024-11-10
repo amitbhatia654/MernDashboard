@@ -186,7 +186,12 @@ export default function Index() {
             style={{
               minHeight: "87vh",
               maxHeight: "87vh",
-              padding: "20px",
+              padding: "10px",
+              paddingLeft: "12px",
+              paddingRight: "12px",
+              // boxShadow: " inset  0px 0px 2px 1px grey",
+              // borderRadius: "10px",
+              // margin: "5px",
             }}
           >
             <Outlet></Outlet>
