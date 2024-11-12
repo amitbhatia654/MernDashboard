@@ -15,7 +15,7 @@ import Order from "./pages/Order";
 import Setting from "./pages/Setting";
 import { useEffect } from "react";
 import UserDetails from "./pages/Users/UsersDetails";
-import UpdateUser from "./pages/Users/UpdateUser";
+import UpdateProfile from "./pages/UpdateProfile";
 
 function App() {
   const isUserLogin = () => {
@@ -64,7 +64,7 @@ function App() {
         <Route path="/" element={<PrivateRoute />}>
           <Route index element={<Main_dashBoard></Main_dashBoard>}></Route>
           <Route path="users" element={<UserDetails />}></Route>
-          <Route path="update-user" element={<UpdateUser />}></Route>
+          <Route path="update-profile" element={<UpdateProfile />}></Route>
           <Route path="employees" element={<Employee />}></Route>
           <Route path="profile" element={<MyProfile></MyProfile>}></Route>
           <Route

@@ -4,17 +4,20 @@ import WidgetsIcon from "@mui/icons-material/Widgets";
 import ContactEmergencyIcon from "@mui/icons-material/ContactEmergency";
 import PeopleIcon from "@mui/icons-material/People";
 import GradingIcon from "@mui/icons-material/Grading";
+import { useSelector } from "react-redux";
 // import { useFirebase } from "../context/Firebase";
 
 export default function SideNav({ isOpen }) {
   const location = useLocation();
+  const user = useSelector((state) => state.cart);
+  console.log(user, "the user is 123");
 
   const routes = [
-    { path: "Users", logo: <ContactEmergencyIcon /> },
-    { path: "employees", logo: <ContactEmergencyIcon /> },
-    { path: "customers", logo: <PeopleIcon /> },
-    { path: "orders", logo: <GradingIcon /> },
-    { path: "settings", logo: <GradingIcon /> },
+    { path: "Users", logo: <ContactEmergencyIcon />, isAdmin: false },
+    { path: "employees", logo: <ContactEmergencyIcon />, isAdmin: true },
+    { path: "customers", logo: <PeopleIcon />, isAdmin: true },
+    { path: "orders", logo: <GradingIcon />, isAdmin: true },
+    { path: "settings", logo: <GradingIcon />, isAdmin: true },
   ];
   return (
     <>
@@ -47,40 +50,41 @@ export default function SideNav({ isOpen }) {
         </Link>
       </Box>
       {routes.map((data, index) => {
-        return (
-          <div key={index} className="menu-items">
-            <Box
-              sx={{
-                mx: 1,
-                my: 1,
-                p: 1,
-                boxShadow: "0px 8px 18px rgba(0, 0, 0, 0.3)",
-                borderRadius: "8px",
-              }}
-              index={index}
-            >
-              <Link
-                to={data?.path}
-                style={{
-                  textDecoration: "none",
-                  textTransform: "capitalize",
-                  fontSize: "16px",
-                  color: `${
-                    location.pathname.slice(1) == data.path ? "blue" : "black"
-                  }`,
+        if (user.isAdmin == true || (user.isAdmin == false && data.isAdmin))
+          return (
+            <div key={index} className="menu-items">
+              <Box
+                sx={{
+                  mx: 1,
+                  my: 1,
+                  p: 1,
+                  boxShadow: "0px 8px 18px rgba(0, 0, 0, 0.3)",
+                  borderRadius: "8px",
                 }}
+                index={index}
               >
-                <span> {data?.logo}</span>
-                <Box
-                  component={"span"}
-                  sx={{ display: `${isOpen && "none"}`, mx: 1, my: 1 }}
+                <Link
+                  to={data?.path}
+                  style={{
+                    textDecoration: "none",
+                    textTransform: "capitalize",
+                    fontSize: "16px",
+                    color: `${
+                      location.pathname.slice(1) == data.path ? "blue" : "black"
+                    }`,
+                  }}
                 >
-                  {data?.path.toUpperCase()}
-                </Box>
-              </Link>
-            </Box>
-          </div>
-        );
+                  <span> {data?.logo}</span>
+                  <Box
+                    component={"span"}
+                    sx={{ display: `${isOpen && "none"}`, mx: 1, my: 1 }}
+                  >
+                    {data?.path.toUpperCase()}
+                  </Box>
+                </Link>
+              </Box>
+            </div>
+          );
       })}
     </>
   );

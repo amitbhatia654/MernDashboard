@@ -45,7 +45,7 @@ export default function ContainerPage({
             {showSearch && (
               <TextField
                 type="text"
-                sx={{ width: "200px", m: 1 }}
+                sx={{ width: "200px", mt: 1 }}
                 size="small"
                 onChange={(e) => {
                   setSearch(e.target.value);
@@ -53,7 +53,9 @@ export default function ContainerPage({
                 placeholder="search"
               ></TextField>
             )}
-            {btnTitle && <button className="common-btn">{btnTitle}</button>}
+            {btnTitle && (
+              <button className="common-btn ">{btnTitle}</button>
+            )}
           </div>
         </div>
       </div>
@@ -65,18 +67,19 @@ export default function ContainerPage({
         }}
       >
         <div
-          className="d-flex flex-column justify-content-between  "
+          className="d-flex flex-column justify-content-between mt-2 "
           style={{ height: "76vh" }}
         >
           {children}
-
-          <Pagination
-            setRowSize={setRowSize}
-            rowSize={rowSize}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            totalPages={totalPages}
-          ></Pagination>
+          {rowSize && (
+            <Pagination
+              setRowSize={setRowSize}
+              rowSize={rowSize}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              totalPages={totalPages}
+            ></Pagination>
+          )}
         </div>
       </div>
     </div>

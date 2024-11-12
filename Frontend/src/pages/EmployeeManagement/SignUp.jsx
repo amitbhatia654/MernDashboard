@@ -127,7 +127,12 @@ const SignUp = () => {
                     type="text"
                     value={phone}
                     placeholder="Phone Number"
-                    onChange={(e) => setPhone(e.target.value)}
+                    // onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 10) {
+                        setPhone(e.target.value);
+                      }
+                    }}
                     name="phn_number"
                   />
                 </InputGroup>

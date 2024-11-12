@@ -16,6 +16,7 @@ body {
     /* background-color: rgb(243, 240, 240); */
     background-color: var(--box-color);
     /* color: white; */
+    text-transform: uppercase;
 }
 
 
@@ -75,9 +76,10 @@ body {
     padding-left: 21px;
     padding-right: 21px;
     font-size: 17px;
-    min-height: 42px;
-    max-height: 42px;
-    margin-top: 6px;
+    min-height: 40px;
+    max-height: 40px;
+    margin-top: 8px;
+    margin-left: 10px;
 }
 
 .common-btn:hover {

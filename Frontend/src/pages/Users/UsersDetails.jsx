@@ -17,8 +17,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import toast from "react-hot-toast";
 import noResult from "../../images/no-results3.jpeg";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from "@mui/icons-material/Star";
+import { useSelector } from "react-redux";
 
 export default function UsersDetails() {
+  const user = useSelector((state) => state.cart);
+
   const [allemployee, setAllEmployee] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -26,7 +31,6 @@ export default function UsersDetails() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
-  const navigate = useNavigate();
   const totalPages = Math.ceil(totalCount / rowSize);
 
   const fetchData = async () => {
@@ -44,15 +48,24 @@ export default function UsersDetails() {
     setLoading(false);
   };
 
-  const handleEdit = (id) => {
-    navigate("/add-new-employee", { state: { id } });
-  };
-
   const handleDelete = async (id) => {
-    const res = await axiosInstance.delete(`/api/employee/${id}`);
+    const res = await axiosInstance.delete(`/api/delete-user/${id}`);
     if (res.status == 200) {
       toast.success(res.data.message);
       setAllEmployee(allemployee.filter((data) => data._id != id));
+    }
+  };
+
+  const handleSubmit = async (id, isAdmin) => {
+    const res = await axiosInstance.put(`/api/update-profile/${id}`, {
+      isAdmin: !isAdmin,
+      markAdmin: "true",
+      _id: id,
+    });
+
+    if (res.status == 200) {
+      toast.success(res.data);
+      fetchData();
     }
   };
 
@@ -62,9 +75,9 @@ export default function UsersDetails() {
   return (
     <div>
       <ContainerPage
-        showBackBtn={true}
+        // showBackBtn={true}
         title={"ALL USERS"}
-        btnTitle={"Add User"}
+        // btnTitle={"Add User"}
         showSearch={true}
         setSearch={setSearch}
         rowSize={rowSize}
@@ -95,7 +108,8 @@ export default function UsersDetails() {
                 <TableCell sx={{ color: "white" }}>Email</TableCell>
                 <TableCell sx={{ color: "white" }}>Phone Number</TableCell>
                 <TableCell sx={{ color: "white" }}>Joining Date</TableCell>
-                {/* <TableCell sx={{ color: "white" }}>Action</TableCell> */}
+                <TableCell sx={{ color: "white" }}>IS Admin</TableCell>
+                <TableCell sx={{ color: "white" }}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -143,6 +157,51 @@ export default function UsersDetails() {
                       style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                     >
                       {row?.createdAt?.split("T")[0]}
+                    </TableCell>
+
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      {row?.isAdmin ? "yes" : "no"}
+                    </TableCell>
+
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      <div>
+                        <button
+                          type="button"
+                          style={{
+                            color: `${user.id == row._id ? "" : "#47478c"}`,
+                            cursor: `${user.id == row._id ? "" : "pointer"}`,
+                            border: "1px solid white",
+                            marginLeft: "2px",
+                          }}
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          disabled={user.id == row._id}
+                          title={row.isAdmin ? "Remove Admin" : "Mark Admin"}
+                          onClick={() => handleSubmit(row._id, row?.isAdmin)}
+                        >
+                          {row.isAdmin ? <StarIcon /> : <StarBorderIcon />}
+                        </button>
+                        <button
+                          style={{
+                            color: `${user.id == row._id ? "" : "#47478c"}`,
+                            cursor: `${user.id == row._id ? "" : "pointer"}`,
+                            border: "1px solid white",
+                            marginLeft: "4px",
+                          }}
+                          type="button"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="left"
+                          title="Delete"
+                          disabled={user.id == row._id}
+                          onClick={() => handleDelete(row._id)}
+                        >
+                          <DeleteIcon />
+                        </button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

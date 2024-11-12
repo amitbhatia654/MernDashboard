@@ -6,6 +6,9 @@ const UserSchema = new mongoose.Schema({
     }, email: {
         type: String, require: true
     },
+    isAdmin: { type: Boolean, default: false },
+    address: { type: String },
+    department: { type: String },
     phone: {
         type: Number, require: true
     }

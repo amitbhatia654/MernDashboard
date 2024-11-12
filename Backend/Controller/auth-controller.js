@@ -1,7 +1,8 @@
 const User = require("../Models/UserModel")
 const Employee = require("../Models/EmployeeModel")
 const bcrypt = require('bcrypt');
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const { response } = require("express");
 
 const login = async (req, res) => {
     try {
@@ -58,7 +59,7 @@ const getEmployeeById = async (req, res) => {
         res.status(200).send(response)
 
     } catch (error) {
-
+        res.status(203).send("Data Not Found")
     }
 }
 
@@ -147,10 +148,56 @@ const allUsers = async (req, res) => {
 }
 
 
+const getProfileDetails = async (req, res) => {
+    try {
+        const response = await User.findOne({ _id: req.params.id })
+        res.status(200).send(response)
+
+    } catch (error) {
+        res.status(203).send("Data Not Found")
+    }
+}
+
+
+const updateProfileDetails = async (req, res) => {
+    try {
+        const response = await User.findByIdAndUpdate(req.body._id, req.body)
+        if (req.body.markAdmin) {
+            res.status(200).send("User Updated Succesfully")
+        }
+        else
+            res.status(200).send({ data: response, message: "Profile updated succesfully" })
+
+    } catch (error) {
+        res.status(203).send("user Not Updated")
+    }
+}
+
+
+
+const deleteUser = async (req, res) => {
+    try {
+        const deletedEmployee = await User.findOneAndDelete({ _id: req.params.id });
+        if (!deletedEmployee) {
+            return res.status(404).send({ message: 'user not deleted' });
+        }
+        res.status(200).send({ message: 'User deleted successfully', data: deletedEmployee });
+
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).send({ message: 'Failed to delete employee' });
+    }
+};
+
+
+
+
+
+
 
 
 
 module.exports = {
     login, register, profile, AddEmployee, getAllEmployee, getEmployeeById, updateEmployee,
-    deleteEmployee, allUsers
+    deleteEmployee, allUsers, getProfileDetails, updateProfileDetails, deleteUser
 }

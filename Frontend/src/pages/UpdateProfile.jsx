@@ -1,41 +1,38 @@
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-} from "@mui/material";
+import { Button, FormControl, InputLabel, OutlinedInput } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Form, Formik } from "formik";
 import toast from "react-hot-toast";
-import { addEmployee } from "../../assets/FormSchema";
-import axiosInstance from "../../ApiManager";
-import ContainerPage from "../HelperPages/ContainerPage";
+import { addEmployee, updateProfileSchema } from "../assets/FormSchema";
+import axiosInstance from "../ApiManager";
+import ContainerPage from "./HelperPages/ContainerPage";
+import { useDispatch, useSelector } from "react-redux";
+import { add } from "../reduxStore/UserSlice";
 
-export default function UpdateUser() {
+export default function UpdateProfile() {
+  const user = useSelector((state) => state.cart);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { id } = location.state || {};
+  const dispatch = useDispatch();
+  const id = user.id || "";
   const [loading, setloading] = useState(false);
   const [data, setData] = useState({});
 
   const handleSubmit = async (values) => {
     setloading(true);
-    const res = id
-      ? await axiosInstance.put(`/api/employee/${id}`, values)
-      : await axiosInstance.post(`/api/employee`, values);
-
+    const res = await axiosInstance.put(`/api/update-profile/${id}`, values);
+    const user = { id: res.data.data._id, name: values.name };
+    localStorage.setItem("user", JSON.stringify(user));
+    dispatch(add(user));
     setloading(false);
     if (res.status == 200) {
-      toast.success(res.data);
-      navigate("/employees");
+      toast.success(res.data.message);
+      navigate("/profile");
     }
   };
 
   const getEmpById = async () => {
-    const result = await axiosInstance.get(`/api/employee/${id}`);
+    const result = await axiosInstance.get(`/api/update-profile/${id}`);
+
     if (result) {
       setData(result.data);
     } else {
@@ -48,20 +45,27 @@ export default function UpdateUser() {
   }, []);
   return (
     <>
-      <ContainerPage showBackBtn={true} title={"Edit Profile"}>
+      <ContainerPage showBackBtn={true} title={"update profile"}>
         <Formik
           initialValues={
             id
-              ? data
+              ? {
+                  _id: data._id,
+                  name: data.name,
+                  email: data.email,
+                  phone: data.phone,
+                  department: data.department || null,
+                  address: data.address || null,
+                }
               : {
-                  empName: "",
-                  empEmail: "",
-                  empPhone: "",
-                  empDepartment: "",
-                  empAddress: "",
+                  name: "",
+                  email: "",
+                  phone: "",
+                  department: "",
+                  address: "",
                 }
           }
-          validationSchema={addEmployee}
+          validationSchema={updateProfileSchema}
           enableReinitialize={true}
           onSubmit={(values) => handleSubmit(values)}
         >
@@ -86,22 +90,22 @@ export default function UpdateUser() {
                         sx={{ m: 1 }}
                       >
                         <InputLabel
-                          shrink={Boolean(props.values.empName)}
-                          htmlFor="empName"
+                          shrink={Boolean(props.values.name)}
+                          htmlFor="name"
                         >
                           Name
                         </InputLabel>
                         <OutlinedInput
-                          id="empName"
-                          name="empName"
+                          id="name"
+                          name="name"
                           placeholder="enter name"
-                          value={props.values.empName}
+                          value={props.values.name}
                           onChange={props.handleChange}
                           label="Name"
                         />
                       </FormControl>
                       <ErrorMessage
-                        name="empName"
+                        name="name"
                         component={"div"}
                         className="text-danger"
                       ></ErrorMessage>
@@ -115,23 +119,24 @@ export default function UpdateUser() {
                         sx={{ m: 1 }}
                       >
                         <InputLabel
-                          shrink={Boolean(props.values.empEmail)} // Label stays at the top when there's a value
-                          htmlFor="empEmail"
+                          shrink={Boolean(props.values.email)} // Label stays at the top when there's a value
+                          htmlFor="email"
                         >
                           Email
                         </InputLabel>
                         <OutlinedInput
-                          id="empEmail"
-                          name="empEmail"
+                          id="email"
+                          name="email"
+                          disabled
                           placeholder="enter email"
                           type="email"
-                          value={props.values.empEmail}
+                          value={props.values.email}
                           onChange={props.handleChange}
                           label="Email" // Links InputLabel with OutlinedInput
                         />
                       </FormControl>
                       <ErrorMessage
-                        name="empEmail"
+                        name="email"
                         component="div"
                         className="text-danger"
                       />
@@ -145,27 +150,27 @@ export default function UpdateUser() {
                         sx={{ m: 1 }}
                       >
                         <InputLabel
-                          shrink={Boolean(props.values.empPhone)} // Keeps label at the top when there's a value
-                          htmlFor="empPhone"
+                          shrink={Boolean(props.values.phone)} // Keeps label at the top when there's a value
+                          htmlFor="phone"
                         >
                           Phone Number
                         </InputLabel>
                         <OutlinedInput
-                          id="empPhone"
-                          name="empPhone"
+                          id="phone"
+                          name="phone"
                           placeholder="enter phone number"
                           type="number"
-                          value={props.values.empPhone}
+                          value={props.values.phone}
                           onChange={(e) => {
                             if (e.target.value.length <= 10) {
-                              props.setFieldValue("empPhone", e.target.value);
+                              props.setFieldValue("phone", e.target.value);
                             }
                           }}
                           label="Phone Number" // Links InputLabel with OutlinedInput
                         />
                       </FormControl>
                       <ErrorMessage
-                        name="empPhone"
+                        name="phone"
                         component="div"
                         className="text-danger"
                       />
@@ -179,22 +184,22 @@ export default function UpdateUser() {
                         sx={{ m: 1 }}
                       >
                         <InputLabel
-                          shrink={Boolean(props.values.empDepartment)} // Keeps label at the top when there's a value
-                          htmlFor="empDepartment"
+                          shrink={Boolean(props.values.department)} // Keeps label at the top when there's a value
+                          htmlFor="department"
                         >
                           Department
                         </InputLabel>
                         <OutlinedInput
-                          id="empDepartment"
-                          name="empDepartment"
+                          id="department"
+                          name="department"
                           placeholder="enter department"
-                          value={props.values.empDepartment}
+                          value={props.values.department}
                           onChange={props.handleChange}
                           label="Department" // Links InputLabel with OutlinedInput
                         />
                       </FormControl>
                       <ErrorMessage
-                        name="empDepartment"
+                        name="department"
                         component="div"
                         className="text-danger"
                       />
@@ -208,22 +213,22 @@ export default function UpdateUser() {
                         sx={{ m: 1 }}
                       >
                         <InputLabel
-                          shrink={Boolean(props.values.empAddress)}
-                          htmlFor="empAddress"
+                          shrink={Boolean(props.values.address)}
+                          htmlFor="address"
                         >
                           Address
                         </InputLabel>
                         <OutlinedInput
-                          id="empAddress"
-                          name="empAddress"
+                          id="address"
+                          name="address"
                           placeholder="enter address"
-                          value={props.values.empAddress}
+                          value={props.values.address}
                           onChange={props.handleChange}
                           label="Address"
                         />
                       </FormControl>
                       <ErrorMessage
-                        name="empAddress"
+                        name="address"
                         component="div"
                         className="text-danger"
                       />

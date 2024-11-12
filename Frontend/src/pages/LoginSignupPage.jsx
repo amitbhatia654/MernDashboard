@@ -46,7 +46,11 @@ const LoginSignupPage = () => {
     );
 
     if (res.status == 200) {
-      const user = { id: res.data.user._id, name: res.data.user.name };
+      const user = {
+        id: res.data.user._id,
+        name: res.data.user.name,
+        isAdmin: res.data.user.isAdmin,
+      };
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(user));
       dispatch(add(user));
