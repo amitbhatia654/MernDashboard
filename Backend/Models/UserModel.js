@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     , password: {
         type: String, require: true
     },
-});
+}, { timestamps: true });
 
 const User = new mongoose.model("User", UserSchema);
 module.exports = User;

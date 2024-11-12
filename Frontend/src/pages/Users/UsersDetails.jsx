@@ -31,7 +31,7 @@ export default function UsersDetails() {
 
   const fetchData = async () => {
     setLoading(true);
-    const res = await axiosInstance.get("/api/employee", {
+    const res = await axiosInstance.get("/api/users", {
       params: { search, rowSize, currentPage },
     });
     if (res.status == 200) {
@@ -62,17 +62,22 @@ export default function UsersDetails() {
   return (
     <div>
       <ContainerPage
-        showBackBtn={false}
+        showBackBtn={true}
         title={"ALL USERS"}
-        // showBtn="true"
-        // btnTitle={"Add User"}
+        btnTitle={"Add User"}
+        showSearch={true}
         setSearch={setSearch}
+        rowSize={rowSize}
+        setRowSize={setRowSize}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
       >
         <TableContainer
           className="scrollable-container "
           style={{
-            maxHeight: "62vh",
-            boxShadow: "3px 6px 8px grey",
+            maxHeight: "67vh",
+            // minHeight: "67vh",
           }}
         >
           <Table aria-label="simple table">
@@ -88,8 +93,9 @@ export default function UsersDetails() {
                 <TableCell sx={{ color: "white" }}>S.No.</TableCell>
                 <TableCell sx={{ color: "white" }}>User Name</TableCell>
                 <TableCell sx={{ color: "white" }}>Email</TableCell>
+                <TableCell sx={{ color: "white" }}>Phone Number</TableCell>
                 <TableCell sx={{ color: "white" }}>Joining Date</TableCell>
-                <TableCell sx={{ color: "white" }}>Action</TableCell>
+                {/* <TableCell sx={{ color: "white" }}>Action</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -119,49 +125,24 @@ export default function UsersDetails() {
                     <TableCell
                       style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                     >
-                      {row?.empName}
+                      {row?.name}
                     </TableCell>
                     <TableCell
                       style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                     >
-                      {row?.empEmail}
+                      {row?.email}
                     </TableCell>
 
                     <TableCell
                       style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                     >
-                      {row?.empAddress}
+                      {row?.phone}
                     </TableCell>
+
                     <TableCell
                       style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                     >
-                      <div className="d-flex ">
-                        <button
-                          type="button"
-                          style={{
-                            color: "#47478c",
-                            cursor: "pointer",
-                            border: "1px solid white",
-                            margin: "1px",
-                          }}
-                          onClick={() => handleEdit(row._id)}
-                        >
-                          <BorderColorIcon />
-                        </button>
-
-                        <button
-                          style={{
-                            color: "#47478c",
-                            cursor: "pointer",
-                            border: "1px solid white",
-                            margin: "1px",
-                          }}
-                          type="button"
-                          onClick={() => handleDelete(row._id)}
-                        >
-                          <DeleteIcon />
-                        </button>
-                      </div>
+                      {row?.createdAt?.split("T")[0]}
                     </TableCell>
                   </TableRow>
                 ))
@@ -190,56 +171,6 @@ export default function UsersDetails() {
             </TableBody>
           </Table>
         </TableContainer>
-
-        <div className="d-flex justify-content-center mt-3 ">
-          <span className="m-3">Rows Per Page</span>
-          <TextField
-            select
-            value={rowSize}
-            onChange={(e) => setRowSize(e.target.value)}
-            variant="outlined"
-            size="small"
-            sx={{ mt: 1, mx: 2 }}
-          >
-            <MenuItem value="6">6</MenuItem>
-            <MenuItem value="12">12</MenuItem>
-            <MenuItem value="18">18</MenuItem>
-          </TextField>
-
-          <Button
-            variant="outlined"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            sx={{
-              my: 1,
-              color: "blue",
-              backgroundColor: "white",
-              fontSize: "13px",
-            }}
-            disabled={currentPage === 1}
-          >
-            {"< prev"}
-          </Button>
-
-          <span className="m-3">
-            Page {currentPage} of {totalPages}
-          </span>
-
-          <Button
-            variant="outlined"
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            sx={{
-              my: 1,
-              color: "blue",
-              backgroundColor: "white",
-              fontSize: "13px",
-            }}
-            disabled={currentPage === totalPages}
-          >
-            {"Next >"}
-          </Button>
-        </div>
       </ContainerPage>
     </div>
   );

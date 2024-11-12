@@ -124,11 +124,33 @@ const profile = async (req, res) => {
     }
 }
 
+const allUsers = async (req, res) => {
+    try {
+        let search = req.query.search
+        let rowSize = parseInt(req.query.rowSize) || 6;
+        let page = parseInt(req.query.currentPage) || 1; // Default to page 1
+        let skip = (page - 1) * rowSize;
+
+        const query = search
+            ? { name: { $regex: search, $options: "i" } }
+            : {};
+
+        const response = await User.find(query).skip(skip).limit(rowSize).select("-password")
+        const totalCount = await User.countDocuments(query);
+
+        res.status(200).json({ response, totalCount })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).send("Some error found")
+    }
+}
+
 
 
 
 
 module.exports = {
     login, register, profile, AddEmployee, getAllEmployee, getEmployeeById, updateEmployee,
-    deleteEmployee
+    deleteEmployee, allUsers
 }

@@ -1,6 +1,8 @@
 import { Button } from "@mui/material";
 import img from "../images/user.jpg";
+import { useNavigate } from "react-router-dom";
 const MyProfile = () => {
+  const navigate = useNavigate();
   return (
     <>
       <h2 className="text-center">My Profile</h2>
@@ -55,6 +57,7 @@ const MyProfile = () => {
                     backgroundColor: "white",
                     fontSize: "13px",
                   }}
+                  onClick={() => navigate("/update-user")}
                 >
                   Edit
                 </Button>

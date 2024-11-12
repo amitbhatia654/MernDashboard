@@ -66,3 +66,31 @@ body {
     border-radius: 10px;
     /* Rounded edges */
 }
+
+.common-btn {
+
+    color: white;
+    background-color: #47478c;
+    border: 0px;
+    padding-left: 21px;
+    padding-right: 21px;
+    font-size: 17px;
+    min-height: 42px;
+    max-height: 42px;
+    margin-top: 6px;
+}
+
+.common-btn:hover {
+    color: #47478c;
+    background-color: white;
+    transition: 0.3s;
+    border: 1px solid;
+}
+
+.pagination {
+    margin-top: 5px;
+}
+
+.border1 {
+    border: 1px solid blue;
+}
