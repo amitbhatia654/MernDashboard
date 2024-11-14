@@ -11,7 +11,8 @@ const UserSchema = new mongoose.Schema({
     department: { type: String },
     phone: {
         type: Number, require: true
-    }
+    },
+    profilePic: { type: String }
     , password: {
         type: String, require: true
     },

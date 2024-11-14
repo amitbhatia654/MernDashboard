@@ -87,9 +87,16 @@ export default function Index() {
                   }}
                 >
                   {" "}
+                  {/* {console.log(userData.profilePic, "the pic")} */}
                   {userData?.name?.toUpperCase() ?? "user"}
                 </span>
-                <Avatar alt="User Image" src={user} className="" />
+                {/* <img
+                  alt="User Image"
+                  src={userData.profilePic}
+                  className=""
+                  style={{ height: "40px", width: "40px", borderRadius: "50%" }}
+                /> */}
+                <Avatar></Avatar>
               </IconButton>
             </Tooltip>
             <Menu

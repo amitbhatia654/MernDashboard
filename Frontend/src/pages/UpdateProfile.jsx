@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage, Form, Formik } from "formik";
 import toast from "react-hot-toast";
-import { addEmployee, updateProfileSchema } from "../assets/FormSchema";
+import { updateProfileSchema } from "../assets/FormSchema";
 import axiosInstance from "../ApiManager";
 import ContainerPage from "./HelperPages/ContainerPage";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +17,31 @@ export default function UpdateProfile() {
   const [loading, setloading] = useState(false);
   const [data, setData] = useState({});
 
+  function convertFileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
   const handleSubmit = async (values) => {
+    if (values.profilePic) {
+      const base64 = await convertFileToBase64(values.profilePic);
+      var data = { ...values, profilePic: base64 };
+    } else {
+      data = values;
+    }
+
     setloading(true);
-    const res = await axiosInstance.put(`/api/update-profile/${id}`, values);
-    const user = { id: res.data.data._id, name: values.name };
+    const res = await axiosInstance.put(`/api/update-profile/${id}`, {
+      ...data,
+    });
+    const user = {
+      id: res.data.data._id,
+      name: values.name,
+    };
     localStorage.setItem("user", JSON.stringify(user));
     dispatch(add(user));
     setloading(false);
@@ -232,6 +253,27 @@ export default function UpdateProfile() {
                         component="div"
                         className="text-danger"
                       />
+                    </div>
+
+                    <div className="col-md-4">
+                      <FormControl
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        sx={{ m: 1 }}
+                      >
+                        <InputLabel
+                          shrink={true} // Keeps label at the top when there's a value
+                        >
+                          Profile Pic
+                        </InputLabel>
+                        <OutlinedInput
+                          type="file"
+                          onChange={(e) =>
+                            props.setFieldValue("profilePic", e.target.files[0])
+                          }
+                        />
+                      </FormControl>
                     </div>
 
                     <div className="d-flex justify-content-center my-5">

@@ -113,17 +113,7 @@ const register = async (req, res) => {
 }
 
 
-const profile = async (req, res) => {
-    try {
-        console.log("Profile func is called")
-        return res.status(200).send("User is valid")
-    }
 
-    catch (error) {
-        console.log('some error in profile');
-
-    }
-}
 
 const allUsers = async (req, res) => {
     try {
@@ -160,6 +150,7 @@ const getProfileDetails = async (req, res) => {
 
 
 const updateProfileDetails = async (req, res) => {
+
     try {
         const response = await User.findByIdAndUpdate(req.body._id, req.body)
         if (req.body.markAdmin) {
@@ -198,6 +189,6 @@ const deleteUser = async (req, res) => {
 
 
 module.exports = {
-    login, register, profile, AddEmployee, getAllEmployee, getEmployeeById, updateEmployee,
+    login, register, AddEmployee, getAllEmployee, getEmployeeById, updateEmployee,
     deleteEmployee, allUsers, getProfileDetails, updateProfileDetails, deleteUser
 }
