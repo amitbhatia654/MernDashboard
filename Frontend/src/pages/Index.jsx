@@ -10,16 +10,20 @@ import {
 } from "@mui/material";
 
 import React, { useState } from "react";
-import SideNav from "../components/SideNav";
+// import SideNav from "../components/SideNav";
 import { Outlet, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import user from "../images/dp.jpeg";
 import { remove } from "../reduxStore/UserSlice";
+import SideNav from "../Components/SideNav";
 
 export default function Index() {
   const [isOpen, setIsOpen] = useState(false);
@@ -121,6 +125,7 @@ export default function Index() {
                     navigate("/profile");
                   }}
                 >
+                  <AccountBoxIcon className="mx-2" />
                   Profile
                 </Typography>
               </MenuItem>
@@ -132,7 +137,7 @@ export default function Index() {
                     navigate("/settings");
                   }}
                 >
-                  Settings
+                  <SettingsIcon className="mx-2" /> Settings
                 </Typography>
               </MenuItem>
 
@@ -146,7 +151,7 @@ export default function Index() {
                     dispatch(remove());
                   }}
                 >
-                  Logout
+                  <LogoutIcon className="mx-2" /> Logout
                 </Typography>
               </MenuItem>
             </Menu>

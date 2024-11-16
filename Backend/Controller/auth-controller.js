@@ -22,10 +22,11 @@ const login = async (req, res) => {
 }
 
 const AddEmployee = async (req, res) => {
+
     try {
-        const { empName, empEmail, empPhone, empDepartment, empAddress } = req.body
-        const Res = await Employee.create({ empName, empPhone, empEmail, empDepartment, empAddress })
-        res.status(200).send("New Employee Added Succesfully")
+        const { empName, empEmail, empPhone, empDepartment, empAddress, _id } = req.body
+        const Res = await Employee.create({ empName, empPhone, empEmail, empDepartment, empAddress, createdBy: _id })
+        res.status(200).send("New Member Added Succesfully")
     } catch (error) {
         console.log('Add Employee error', error)
     }
@@ -38,10 +39,11 @@ const getAllEmployee = async (req, res) => {
         let rowSize = parseInt(req.query.rowSize) || 6;
         let page = parseInt(req.query.currentPage) || 1; // Default to page 1
         let skip = (page - 1) * rowSize;
+        const createdBy = req.query._id
 
         const query = search
-            ? { empName: { $regex: search, $options: "i" } }
-            : {};
+            ? { createdBy, empName: { $regex: search, $options: "i" } }
+            : { createdBy };
 
         const response = await Employee.find(query).skip(skip).limit(rowSize)
         const totalCount = await Employee.countDocuments(query);
@@ -122,9 +124,11 @@ const allUsers = async (req, res) => {
         let page = parseInt(req.query.currentPage) || 1; // Default to page 1
         let skip = (page - 1) * rowSize;
 
-        const query = search
-            ? { name: { $regex: search, $options: "i" } }
-            : {};
+        const query = {
+            ...search ? { name: { $regex: search, $options: "i" } } : {},
+            email: { $ne: "admin@gmail.com" } // Exclude admin@gmail.com
+        };
+
 
         const response = await User.find(query).skip(skip).limit(rowSize).select("-password")
         const totalCount = await User.countDocuments(query);

@@ -102,17 +102,19 @@ export default function UsersDetails() {
                 top: 0,
               }}
             >
-              <TableRow>
-                <TableCell sx={{ color: "white" }}>S.No.</TableCell>
+              <TableRow className="tableStyle">
+                <TableCell sx={{ color: "white", textAlign: "center" }}>
+                  S.No.
+                </TableCell>
                 <TableCell sx={{ color: "white" }}>User Name</TableCell>
                 <TableCell sx={{ color: "white" }}>Email</TableCell>
                 <TableCell sx={{ color: "white" }}>Phone Number</TableCell>
                 <TableCell sx={{ color: "white" }}>Joining Date</TableCell>
-                <TableCell sx={{ color: "white" }}>IS Admin</TableCell>
+                <TableCell sx={{ color: "white" }}>Admin</TableCell>
                 <TableCell sx={{ color: "white" }}>Action</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody className="tableBodyStyle">
               {loading ? (
                 <TableCell colSpan={8}>
                   {" "}
@@ -137,7 +139,9 @@ export default function UsersDetails() {
                       {(currentPage - 1) * rowSize + index + 1}
                     </TableCell>
                     <TableCell
-                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                      style={{
+                        boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)",
+                      }}
                     >
                       {row?.name}
                     </TableCell>
@@ -162,7 +166,17 @@ export default function UsersDetails() {
                     <TableCell
                       style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
                     >
-                      {row?.isAdmin ? "yes" : "no"}
+                      <TextField
+                        select
+                        disabled={user.id == row._id}
+                        value={row?.isAdmin ? "yes" : "no"}
+                        onChange={(e) => handleSubmit(row._id, row?.isAdmin)}
+                        variant="outlined"
+                        size="small"
+                      >
+                        <MenuItem value="yes">Yes</MenuItem>
+                        <MenuItem value="no">No</MenuItem>
+                      </TextField>
                     </TableCell>
 
                     <TableCell
@@ -170,27 +184,10 @@ export default function UsersDetails() {
                     >
                       <div>
                         <button
-                          type="button"
                           style={{
                             color: `${user.id == row._id ? "" : "#47478c"}`,
                             cursor: `${user.id == row._id ? "" : "pointer"}`,
                             border: "1px solid white",
-                            marginLeft: "2px",
-                          }}
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="left"
-                          disabled={user.id == row._id}
-                          title={row.isAdmin ? "Remove Admin" : "Mark Admin"}
-                          onClick={() => handleSubmit(row._id, row?.isAdmin)}
-                        >
-                          {row.isAdmin ? <StarIcon /> : <StarBorderIcon />}
-                        </button>
-                        <button
-                          style={{
-                            color: `${user.id == row._id ? "" : "#47478c"}`,
-                            cursor: `${user.id == row._id ? "" : "pointer"}`,
-                            border: "1px solid white",
-                            marginLeft: "4px",
                           }}
                           type="button"
                           data-bs-toggle="tooltip"

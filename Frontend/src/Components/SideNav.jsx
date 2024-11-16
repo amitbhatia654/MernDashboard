@@ -2,42 +2,44 @@ import { Link, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 import WidgetsIcon from "@mui/icons-material/Widgets";
 import ContactEmergencyIcon from "@mui/icons-material/ContactEmergency";
-import PeopleIcon from "@mui/icons-material/People";
 import GradingIcon from "@mui/icons-material/Grading";
 import { useSelector } from "react-redux";
 // import { useFirebase } from "../context/Firebase";
+import SettingsIcon from "@mui/icons-material/Settings";
+import GroupIcon from "@mui/icons-material/Group";
+import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 
 export default function SideNav({ isOpen }) {
   const location = useLocation();
   const user = useSelector((state) => state.cart);
 
   const routes = [
-    { path: "Users", logo: <ContactEmergencyIcon />, isAdmin: false },
+    { path: "Users", logo: <GroupIcon />, isAdmin: false },
     { path: "employees", logo: <ContactEmergencyIcon />, isAdmin: true },
-    { path: "customers", logo: <PeopleIcon />, isAdmin: true },
+    { path: "customers", logo: <SwitchAccountIcon />, isAdmin: true },
     { path: "orders", logo: <GradingIcon />, isAdmin: true },
-    { path: "settings", logo: <GradingIcon />, isAdmin: true },
+    { path: "settings", logo: <SettingsIcon />, isAdmin: true },
   ];
   return (
     <>
-      <Box
-        sx={{
-          mx: 1,
-          my: 1,
-          p: 1,
-          boxShadow: "0px 8px 18px rgba(0, 0, 0, 0.3)",
-          borderRadius: "8px",
+      <Link
+        to={"/"}
+        style={{
+          textDecoration: "none",
+          textTransform: "capitalize",
+          fontSize: "16px",
+          color: `${location.pathname == "/" ? "blue" : "black"}`,
         }}
-        // backgroundColor={`${location.pathname == "/" ? "#4eaefc" : ""}`}
       >
-        <Link
-          to={"/"}
-          style={{
-            textDecoration: "none",
-            textTransform: "capitalize",
-            fontSize: "16px",
-            color: `${location.pathname == "/" ? "blue" : "black"}`,
+        <Box
+          sx={{
+            mx: 1,
+            my: 1,
+            p: 1,
+            boxShadow: "0px 8px 18px rgba(0, 0, 0, 0.3)",
+            borderRadius: "8px",
           }}
+          // backgroundColor={`${location.pathname == "/" ? "#4eaefc" : ""}`}
         >
           <WidgetsIcon />
           <Box
@@ -46,32 +48,32 @@ export default function SideNav({ isOpen }) {
           >
             DASHBOARD
           </Box>
-        </Link>
-      </Box>
+        </Box>
+      </Link>
       {routes.map((data, index) => {
         // if (user.isAdmin == true || (user.isAdmin == false && data.isAdmin))
         return (
           <div key={index} className="menu-items">
-            <Box
-              sx={{
-                mx: 1,
-                my: 1,
-                p: 1,
-                boxShadow: "0px 8px 18px rgba(0, 0, 0, 0.3)",
-                borderRadius: "8px",
+            <Link
+              to={data?.path}
+              style={{
+                textDecoration: "none",
+                textTransform: "capitalize",
+                fontSize: "16px",
+                color: `${
+                  location.pathname.slice(1) == data.path ? "blue" : "black"
+                }`,
               }}
-              index={index}
             >
-              <Link
-                to={data?.path}
-                style={{
-                  textDecoration: "none",
-                  textTransform: "capitalize",
-                  fontSize: "16px",
-                  color: `${
-                    location.pathname.slice(1) == data.path ? "blue" : "black"
-                  }`,
+              <Box
+                sx={{
+                  mx: 1,
+                  my: 1,
+                  p: 1,
+                  boxShadow: "0px 8px 18px rgba(0, 0, 0, 0.3)",
+                  borderRadius: "8px",
                 }}
+                index={index}
               >
                 <span> {data?.logo}</span>
                 <Box
@@ -80,8 +82,8 @@ export default function SideNav({ isOpen }) {
                 >
                   {data?.path.toUpperCase()}
                 </Box>
-              </Link>
-            </Box>
+              </Box>
+            </Link>
           </div>
         );
       })}

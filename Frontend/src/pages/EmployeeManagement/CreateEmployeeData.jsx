@@ -12,8 +12,10 @@ import { ErrorMessage, Form, Formik } from "formik";
 import toast from "react-hot-toast";
 import { addEmployee } from "../../assets/FormSchema";
 import axiosInstance from "../../ApiManager";
+import { useSelector } from "react-redux";
 
 export default function CreateEmployeeData() {
+  const user = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = location.state || {};
@@ -23,8 +25,11 @@ export default function CreateEmployeeData() {
   const handleSubmit = async (values) => {
     setloading(true);
     const res = id
-      ? await axiosInstance.put(`/api/employee/${id}`, values)
-      : await axiosInstance.post(`/api/employee`, values);
+      ? await axiosInstance.put(`/api/employee/${id}`, {
+          ...values,
+          // _id: user.id,
+        })
+      : await axiosInstance.post(`/api/employee`, { ...values, _id: user.id });
 
     setloading(false);
     if (res.status == 200) {
@@ -66,7 +71,7 @@ export default function CreateEmployeeData() {
         {(props) => (
           <Form onSubmit={props.handleSubmit}>
             <div
-              className="m-3 p-2 mt-4"
+              className="m-1 p-2 mt-4"
               style={{
                 boxShadow: "0px 5px 8px rgba(0, 0, 0, 0.2)",
                 minHeight: "77vh",
@@ -78,7 +83,7 @@ export default function CreateEmployeeData() {
                 sx={{
                   color: "#47478c",
                   backgroundColor: "white",
-                  fontSize: "14px",
+                  fontSize: "10px",
                 }}
                 onClick={() => navigate("/employees")}
               >
@@ -89,7 +94,7 @@ export default function CreateEmployeeData() {
                   className="text-decoration-underline"
                   style={{ color: "#47478C" }}
                 >
-                  {id ? "Edit" : "Add"} Employee Details
+                  {id ? "Edit" : "Add"} Employee
                 </h2>
               </div>
               <div className="container p-3">

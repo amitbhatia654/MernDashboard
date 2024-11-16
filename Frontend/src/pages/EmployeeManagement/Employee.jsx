@@ -5,14 +5,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, Grid, MenuItem, TextField } from "@mui/material";
-import Button from "@mui/material/Button";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import toast from "react-hot-toast";
 import axiosInstance from "../../ApiManager";
 import noResult from "../../images/no-results3.jpeg";
+import ContainerPage from "../HelperPages/ContainerPage";
+import { useSelector } from "react-redux";
 
 export default function Employee() {
   const [allemployee, setAllEmployee] = useState([]);
@@ -24,11 +25,12 @@ export default function Employee() {
 
   const navigate = useNavigate();
   const totalPages = Math.ceil(totalCount / rowSize);
+  const user = useSelector((state) => state.cart);
 
   const fetchData = async () => {
     setLoading(true);
     const res = await axiosInstance.get("/api/employee", {
-      params: { search, rowSize, currentPage },
+      params: { search, rowSize, currentPage, _id: user.id },
     });
     if (res.status == 200) {
       setAllEmployee(res.data.response);
@@ -52,119 +54,105 @@ export default function Employee() {
     }
   };
 
+  const onBtnClick = () => {
+    navigate("/add-new-employee");
+  };
+
   useEffect(() => {
     fetchData();
   }, [search, rowSize, currentPage]);
 
   return (
     <Box>
-      <Box display={"flex"} justifyContent={"space-between"}>
-        <Box component={"h4"} sx={{ my: 0, color: "#47478C" }}>
-          All EMPLOYEES{" "}
-        </Box>
-
-        <div>
-          <TextField
-            type="text"
-            sx={{ m: 1 }}
-            size="small"
-            placeholder="search"
-            onChange={(e) => {
-              setSearch(e.target.value), setCurrentPage(1);
-            }}
-          ></TextField>
-          <Button
-            variant="outlined"
-            sx={{
-              my: 1,
-              color: "#47478c",
-              backgroundColor: "white",
-              fontSize: "16px",
-            }}
-            onClick={() => navigate("/add-new-employee")}
-          >
-            Add Employee
-          </Button>
-        </div>
-      </Box>
-
-      <TableContainer
-        className="scrollable-container"
-        style={{ maxHeight: "62vh" }}
+      <ContainerPage
+        // showBackBtn={true}
+        title={"Employees "}
+        btnTitle={"Add Employee"}
+        showSearch={true}
+        setSearch={setSearch}
+        rowSize={rowSize}
+        setRowSize={setRowSize}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+        onBtnClick={onBtnClick}
       >
-        <Table aria-label="simple table">
-          <TableHead
-            sx={{
-              backgroundColor: "#47478c",
-              color: "wheat",
-              position: "sticky",
-              top: 0,
-            }}
-          >
-            <TableRow>
-              <TableCell sx={{ color: "white" }}>S.No.</TableCell>
-              <TableCell sx={{ color: "white" }}>Employee Name</TableCell>
-              <TableCell sx={{ color: "white" }}>Email</TableCell>
-              <TableCell sx={{ color: "white" }}>Phone</TableCell>
-              <TableCell sx={{ color: "white" }}>Department</TableCell>
-              <TableCell sx={{ color: "white" }}>Address</TableCell>
-              <TableCell sx={{ color: "white" }}>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {loading ? (
-              <TableCell colSpan={8}>
-                {" "}
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "300px",
-                    textAlign: "center",
-                  }}
-                >
-                  <div className="loader"></div>
-                </div>
-              </TableCell>
-            ) : allemployee.length > 0 ? (
-              allemployee?.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell
-                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+        <TableContainer
+          className="scrollable-container"
+          style={{ maxHeight: "62vh" }}
+        >
+          <Table aria-label="simple table">
+            <TableHead
+              sx={{
+                backgroundColor: "#47478c",
+                color: "wheat",
+                position: "sticky",
+                top: 0,
+              }}
+            >
+              <TableRow className="tableStyle">
+                <TableCell sx={{ color: "white" }}>S.No.</TableCell>
+                <TableCell sx={{ color: "white" }}>Employee Name</TableCell>
+                <TableCell sx={{ color: "white" }}>Email</TableCell>
+                <TableCell sx={{ color: "white" }}>Phone</TableCell>
+                <TableCell sx={{ color: "white" }}>Department</TableCell>
+                <TableCell sx={{ color: "white" }}>Address</TableCell>
+                <TableCell sx={{ color: "white" }}>Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody className="tableBodyStyle">
+              {loading ? (
+                <TableCell colSpan={8}>
+                  {" "}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "300px",
+                      textAlign: "center",
+                    }}
                   >
-                    {(currentPage - 1) * rowSize + index + 1}
-                  </TableCell>
-                  <TableCell
-                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
-                  >
-                    {row?.empName}
-                  </TableCell>
-                  <TableCell
-                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
-                  >
-                    {row?.empEmail}
-                  </TableCell>
-                  <TableCell
-                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
-                  >
-                    {row?.empPhone}
-                  </TableCell>
-                  <TableCell
-                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
-                  >
-                    {row?.empDepartment}
-                  </TableCell>
-                  <TableCell
-                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
-                  >
-                    {row?.empAddress}
-                  </TableCell>
-                  <TableCell
-                    style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
-                  >
-                    <Grid container>
-                      <Grid item lg={4}>
+                    <div className="loader"></div>
+                  </div>
+                </TableCell>
+              ) : allemployee.length > 0 ? (
+                allemployee?.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      {(currentPage - 1) * rowSize + index + 1}
+                    </TableCell>
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      {row?.empName}
+                    </TableCell>
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      {row?.empEmail}
+                    </TableCell>
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      {row?.empPhone}
+                    </TableCell>
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      {row?.empDepartment}
+                    </TableCell>
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      {row?.empAddress}
+                    </TableCell>
+                    <TableCell
+                      style={{ boxShadow: "0px 2px 4px rgba(0 ,0 ,0 ,0.2)" }}
+                    >
+                      <div>
                         <button
                           type="button"
                           style={{
@@ -177,8 +165,7 @@ export default function Employee() {
                         >
                           <BorderColorIcon />
                         </button>
-                      </Grid>
-                      <Grid item lg={4}>
+
                         <button
                           style={{
                             color: "#47478c",
@@ -191,86 +178,36 @@ export default function Employee() {
                         >
                           <DeleteIcon />
                         </button>
-                      </Grid>
-                    </Grid>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={8}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "300px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <img
+                        src={noResult}
+                        alt="No Result Image"
+                        height="250px"
+                        width="300px"
+                      />
+                    </div>
                   </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={8}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "300px",
-                      textAlign: "center",
-                    }}
-                  >
-                    <img
-                      src={noResult}
-                      alt="No Result Image"
-                      height="250px"
-                      width="300px"
-                    />
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      <div className="d-flex justify-content-center mt-3 ">
-        <span className="m-3">Rows Per Page</span>
-        <TextField
-          select
-          value={rowSize}
-          onChange={(e) => setRowSize(e.target.value)}
-          variant="outlined"
-          size="small"
-          sx={{ mt: 1, mx: 2 }}
-        >
-          <MenuItem value="6">6</MenuItem>
-          <MenuItem value="12">12</MenuItem>
-          <MenuItem value="18">18</MenuItem>
-        </TextField>
-
-        <Button
-          variant="outlined"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          sx={{
-            my: 1,
-            color: "blue",
-            backgroundColor: "white",
-            fontSize: "13px",
-          }}
-          disabled={currentPage === 1}
-        >
-          {"< prev"}
-        </Button>
-
-        <span className="m-3">
-          Page {currentPage} of {totalPages}
-        </span>
-
-        <Button
-          variant="outlined"
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          sx={{
-            my: 1,
-            color: "blue",
-            backgroundColor: "white",
-            fontSize: "13px",
-          }}
-          disabled={currentPage === totalPages}
-        >
-          {"Next >"}
-        </Button>
-      </div>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </ContainerPage>
     </Box>
   );
 }

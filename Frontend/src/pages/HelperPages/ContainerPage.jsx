@@ -15,6 +15,7 @@ export default function ContainerPage({
   totalPages,
   currentPage,
   setCurrentPage,
+  onBtnClick,
 }) {
   const navigate = useNavigate();
   return (
@@ -49,12 +50,15 @@ export default function ContainerPage({
                 size="small"
                 onChange={(e) => {
                   setSearch(e.target.value);
+                  setCurrentPage(1);
                 }}
                 placeholder="search"
               ></TextField>
             )}
             {btnTitle && (
-              <button className="common-btn ">{btnTitle}</button>
+              <button className="common-btn" onClick={() => onBtnClick()}>
+                {btnTitle}
+              </button>
             )}
           </div>
         </div>

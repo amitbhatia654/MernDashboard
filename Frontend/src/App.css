@@ -96,3 +96,13 @@ body {
 .border1 {
     border: 1px solid blue;
 }
+
+
+.tableStyle .MuiTableCell-root {
+    text-align: center;
+}
+
+.tableBodyStyle .MuiTableCell-root {
+    text-align: center;
+    font-size: 14px;
+}
