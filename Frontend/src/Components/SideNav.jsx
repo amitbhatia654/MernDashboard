@@ -16,7 +16,7 @@ export default function SideNav({ isOpen }) {
   const routes = [
     { path: "Users", logo: <GroupIcon />, isAdmin: false },
     { path: "employees", logo: <ContactEmergencyIcon />, isAdmin: true },
-    { path: "customers", logo: <SwitchAccountIcon />, isAdmin: true },
+    { path: "Messages", logo: <SwitchAccountIcon />, isAdmin: true },
     { path: "orders", logo: <GradingIcon />, isAdmin: true },
     { path: "settings", logo: <SettingsIcon />, isAdmin: true },
   ];

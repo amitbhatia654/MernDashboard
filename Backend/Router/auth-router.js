@@ -18,12 +18,4 @@ router.route("/delete-user/:id").delete(AuthMiddleWare, AuthController.deleteUse
 
 
 
-
-
-
-
-
-
-
-
 module.exports = router;

@@ -2,7 +2,7 @@ const User = require("../Models/UserModel")
 const Employee = require("../Models/EmployeeModel")
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
-const { response } = require("express");
+// const { response } = require("express");
 
 const login = async (req, res) => {
     try {
