@@ -4,6 +4,7 @@ import Modal from "../HelperPages/Modal";
 import axiosInstance from "../../ApiManager";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useSelector } from "react-redux";
+// import { SendMessage } from "../../../../Backend/Controller/chat-controller";
 
 export default function Messages() {
   const user = useSelector((user) => user.cart);
@@ -12,6 +13,8 @@ export default function Messages() {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState("");
   const [allchats, setAllChats] = useState([]);
+  const [message, setMessage] = useState("");
+  const [selectedUser, setSelectedUser] = useState({});
 
   const fetchData = async () => {
     setLoading(true);
@@ -35,14 +38,26 @@ export default function Messages() {
   };
 
   const fetchAllChats = async () => {
-    setLoading(true);
+    // setLoading(true);
     const res = await axiosInstance.get("/api/chat/allChats");
     if (res.status == 200) {
       setAllChats(res.data.chats);
     } else {
       setAllChats([]);
     }
-    setLoading(false);
+    // setLoading(false);
+  };
+
+  const SendMessage = async () => {
+    const receiverId = selectedUser.participants.filter(
+      (data) => data._id != user.id
+    )[0]._id;
+
+    const res = await axiosInstance.post("/api/chat/sendMessage", {
+      receiverId,
+      message,
+    });
+    console.log(res, "the response is for post");
   };
 
   useEffect(() => {
@@ -63,19 +78,65 @@ export default function Messages() {
             >
               {" "}
               <h4>All Chats</h4>
-              {allchats.map((chat) => {
+              {allchats?.map((chat) => {
                 return (
-                  <h6>
+                  <div onClick={(e) => setSelectedUser(chat)}>
                     {
                       chat.participants.filter((data) => data._id != user.id)[0]
                         .name
                     }
-                  </h6>
+                  </div>
                 );
               })}
             </div>
             <div className="col-md-9 border mx-1 border-primary">
-              <h4> message Box</h4>
+              <h4>
+                {" "}
+                {selectedUser?.participants?.filter(
+                  (data) => data._id != user.id
+                )[0].name || "Message Box"}
+              </h4>
+
+              {selectedUser.participants && (
+                <div className="container">
+                  <div className="row">
+                    <div
+                      className="col-md-12"
+                      style={{ border: "1px solid ", height: "310px" }}
+                    >
+                      {/* <h6>first</h6> */}
+                      {/* <h6 className="text-end">second</h6> */}
+
+                      {/* {console.log(selectedUser, "selected user")} */}
+                      {selectedUser.messages.map((data) => {
+                        console.log(data, "yess");
+                        return (
+                          <h6
+                            className={`${
+                              data.senderId == user.id && "text-end"
+                            }`}
+                          >
+                            {data.message}
+                          </h6>
+                        );
+                      })}
+                    </div>
+
+                    <div className="col-md-12">
+                      <input
+                        type="text"
+                        onChange={(e) => setMessage(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => SendMessage()}
+                      >
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
