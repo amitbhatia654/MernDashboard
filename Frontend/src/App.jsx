@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import UserDetails from "./pages/Users/UsersDetails";
 import UpdateProfile from "./pages/UpdateProfile";
 import Messages from "./pages/Messages/Messages";
+// import { io } from "socket.io-client";
 
 function App() {
   const isUserLogin = () => {
@@ -28,6 +29,9 @@ function App() {
       "--box-color",
       localStorage.getItem("color")
     );
+
+    // const socket = io(import.meta.env.VITE_API_URL);
+    // console.log(socket, "socket");
   }, []);
 
   // eslint-disable-next-line react/prop-types

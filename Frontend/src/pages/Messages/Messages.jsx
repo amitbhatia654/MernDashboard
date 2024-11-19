@@ -4,6 +4,7 @@ import Modal from "../HelperPages/Modal";
 import axiosInstance from "../../ApiManager";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useSelector } from "react-redux";
+import { io } from "socket.io-client";
 // import { SendMessage } from "../../../../Backend/Controller/chat-controller";
 
 export default function Messages() {
@@ -15,6 +16,14 @@ export default function Messages() {
   const [allchats, setAllChats] = useState([]);
   const [message, setMessage] = useState("");
   const [selectedUser, setSelectedUser] = useState({});
+  // const socket = io(import.meta.env.VITE_API_URL);
+
+  useEffect(() => {
+    // socket.on("welcome", (data) => {
+    //   console.log(data, "the data is ");
+    // });
+    // return () => socket.disconnect();
+  }, []);
 
   const fetchData = async () => {
     setLoading(true);
@@ -78,9 +87,9 @@ export default function Messages() {
             >
               {" "}
               <h4>All Chats</h4>
-              {allchats?.map((chat) => {
+              {allchats?.map((chat, key) => {
                 return (
-                  <div onClick={(e) => setSelectedUser(chat)}>
+                  <div onClick={(e) => setSelectedUser(chat)} key={key}>
                     {
                       chat.participants.filter((data) => data._id != user.id)[0]
                         .name
