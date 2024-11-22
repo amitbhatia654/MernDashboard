@@ -14,16 +14,24 @@ const io = new Server(server, {
 
 
 io.on("connection", (socket) => {
-    console.log('user connected socket ', socket.id)
-
-    socket.on('my-message', (m) => io.emit('my-message', m))
-
-
-
-    //socket.on is used to listen the events used on both client and server 
-    socket.on("disconnect", () => {
-        console.log('user disconneted ', socket.id)
+    console.log('user connected socket', socket.id)
+    socket.emit("connecting", socket.id)
+    socket.on("message", ({ roomId, message }) => {
+        // console.log()
+        socket.to(roomId).emit("recieve-msg", message)
     })
+
+
+    
+
+
+
+    // //socket.on is used to listen the events used on both client and server 
+    socket.on("disconnect", () => {
+        console.log('disconneted ', socket.id)
+    })
+
+
 })
 
 

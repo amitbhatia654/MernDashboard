@@ -4,6 +4,8 @@ import WidgetsIcon from "@mui/icons-material/Widgets";
 import ContactEmergencyIcon from "@mui/icons-material/ContactEmergency";
 import GradingIcon from "@mui/icons-material/Grading";
 import { useSelector } from "react-redux";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+
 // import { useFirebase } from "../context/Firebase";
 import SettingsIcon from "@mui/icons-material/Settings";
 import GroupIcon from "@mui/icons-material/Group";
@@ -19,6 +21,7 @@ export default function SideNav({ isOpen }) {
     { path: "Messages", logo: <SwitchAccountIcon />, isAdmin: true },
     { path: "orders", logo: <GradingIcon />, isAdmin: true },
     { path: "settings", logo: <SettingsIcon />, isAdmin: true },
+    { path: "profile", logo: <AccountBoxIcon />, isAdmin: true },
   ];
   return (
     <>

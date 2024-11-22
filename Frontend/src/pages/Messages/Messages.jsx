@@ -4,7 +4,7 @@ import Modal from "../HelperPages/Modal";
 import axiosInstance from "../../ApiManager";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useSelector } from "react-redux";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 // import { SendMessage } from "../../../../Backend/Controller/chat-controller";
 
 export default function Messages() {
