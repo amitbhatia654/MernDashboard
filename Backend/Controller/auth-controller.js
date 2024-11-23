@@ -25,6 +25,7 @@ const AddEmployee = async (req, res) => {
 
     try {
         const { empName, empEmail, empPhone, empDepartment, empAddress, _id } = req.body
+        console.log(req.body, 'body')
         const Res = await Employee.create({ empName, empPhone, empEmail, empDepartment, empAddress, createdBy: _id })
         res.status(200).send("New Member Added Succesfully")
     } catch (error) {
