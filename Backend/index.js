@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const { app, server } = require("./socket/socket");
 const AuthRoute = require('./Router/auth-router');
-const ChatRoute = require("./Router/chat-router")
+const ChatRoute = require("./Router/chat-router");
 
 
 const allowedOrigins = [
@@ -12,7 +12,7 @@ const allowedOrigins = [
     "https://mern-dashboard-orpin.vercel.app"
 ];
 
-var cors = require('cors')
+var cors = require('cors');
 // app.use(cors())
 
 // app.use(cors({
@@ -47,13 +47,13 @@ app.use(bodyParser.json({ limit: '50mb' }));
 const connectDb = require("./utils/db");
 
 app.use(express.json()) // this is the middleware
-app.use('/api/auth', AuthRoute)
-app.use("/api", AuthRoute)
-app.use("/api/chat", ChatRoute)
+app.use('/api/auth', AuthRoute);
+app.use("/api", AuthRoute);
+app.use("/api/chat", ChatRoute);
 
-// app.get('/', (req, res) => {
-//     res.json("hello world")
-// })
+app.get('/', (req, res) => {
+    res.json({ "message": "hello world" });
+});
 
 connectDb().then(() => {
     server.listen(5000, () => console.log("server is running on port 5000"));
