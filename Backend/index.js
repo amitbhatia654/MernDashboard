@@ -35,9 +35,10 @@ app.use(
             }
         },
         methods: ['GET', 'POST', "PUT", "DELETE"], // Allow specific HTTP methods
-        allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
-        exposedHeaders: ['Authorization'], // Expose specific response headers
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Allow specific headers
+        exposedHeaders: ['Authorization', 'X-Total-Count'], // Expose specific response headers
         credentials: true, // Allow cookies
+        maxAge: 600
     })
 );
 
