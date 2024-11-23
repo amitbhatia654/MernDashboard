@@ -27,6 +27,10 @@ app.use('/api/auth', AuthRoute)
 app.use("/api", AuthRoute)
 app.use("/api/chat", ChatRoute)
 
+app.get('/', (req, res) => {
+    res.json("hello world")
+})
+
 connectDb().then(() => {
     server.listen(5000, () => console.log("server is running on port 5000"));
 
