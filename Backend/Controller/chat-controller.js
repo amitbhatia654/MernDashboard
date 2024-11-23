@@ -63,12 +63,13 @@ const SendMessage = async (req, res) => {
             select: "-password -profilePic"
         }).populate('messages');
 
-        // console.log(chats, 'chats')
 
         if (m1) {
-            chats.messages.push(m1._id)
+            chats.messages.push(m1)
             await chats.save();
         }
+
+        console.log(chats, 'chats')
         res.status(200).send({ message: "message send", chats })
     } catch (error) {
         console.log(error, 'error')

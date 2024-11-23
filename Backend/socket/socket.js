@@ -22,7 +22,25 @@ io.on("connection", (socket) => {
     })
 
 
-    
+    socket.on("setup", (userData) => {
+        socket.join(userData.id)
+        socket.emit("connected")
+    })
+
+    socket.on('join chat', (room) => {
+        socket.join(room)
+        console.log('user joined room')
+    })
+
+
+    socket.on("send_message", (data) => {
+        // console.log(data,'the sss')
+        const { room, message } = data;
+        io.to(room).emit("receive_message", message); // Send to all in the room
+    });
+
+
+
 
 
 

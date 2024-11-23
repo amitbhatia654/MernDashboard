@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ContainerPage from "../HelperPages/ContainerPage";
 import Modal from "../HelperPages/Modal";
 import axiosInstance from "../../ApiManager";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useSelector } from "react-redux";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 // import { SendMessage } from "../../../../Backend/Controller/chat-controller";
 
 export default function Messages() {
@@ -16,13 +16,13 @@ export default function Messages() {
   const [allchats, setAllChats] = useState([]);
   const [message, setMessage] = useState("");
   const [selectedUser, setSelectedUser] = useState({});
-  // const socket = io(import.meta.env.VITE_API_URL);
+  const [socketConnected, setSocketConnected] = useState(false);
+  var socket = useMemo(() => io(import.meta.env.VITE_API_URL), []);
 
   useEffect(() => {
-    // socket.on("welcome", (data) => {
-    //   console.log(data, "the data is ");
-    // });
-    // return () => socket.disconnect();
+    socket.emit("setup", user);
+    socket.on("connection", () => setSocketConnected(true));
+    return () => socket.disconnect();
   }, []);
 
   const fetchData = async () => {
@@ -66,13 +66,28 @@ export default function Messages() {
       receiverId,
       message,
     });
-    console.log(res, "the response is for post");
+
+    console.log(res, "the ressss");
+
+    socket.emit("send_message", {
+      room: selectedUser._id,
+      message: res.data.chats,
+    });
+    // console.log(res, "the response is for post");
   };
 
   useEffect(() => {
     fetchData();
     fetchAllChats();
   }, []);
+
+  useEffect(() => {
+    // Listen for incoming messages
+    socket.on("receive_message", (data) => {
+      // console.log(data, "recieved");
+      setSelectedUser(data);
+    });
+  });
   return (
     <ContainerPage title={"messages"}>
       <div>
@@ -89,7 +104,13 @@ export default function Messages() {
               <h4>All Chats</h4>
               {allchats?.map((chat, key) => {
                 return (
-                  <div onClick={(e) => setSelectedUser(chat)} key={key}>
+                  <div
+                    onClick={(e) => {
+                      socket.emit("join chat", chat._id);
+                      setSelectedUser(chat);
+                    }}
+                    key={key}
+                  >
                     {
                       chat.participants.filter((data) => data._id != user.id)[0]
                         .name
@@ -117,8 +138,8 @@ export default function Messages() {
                       {/* <h6 className="text-end">second</h6> */}
 
                       {/* {console.log(selectedUser, "selected user")} */}
+                      {console.log(selectedUser, "selected user is ")}
                       {selectedUser.messages.map((data) => {
-                        console.log(data, "yess");
                         return (
                           <h6
                             className={`${
