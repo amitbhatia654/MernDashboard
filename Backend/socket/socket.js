@@ -8,7 +8,11 @@ const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
         origin: ["https://mern-dashboard-orpin.vercel.app"],
-        methods: ['GET', 'POST']
+        methods: ['GET', 'POST'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Allow specific headers
+        exposedHeaders: ['Authorization', 'X-Total-Count'], // Expose specific response headers
+        credentials: true, // Allow cookies
+        maxAge: 600
     }
 })
 
