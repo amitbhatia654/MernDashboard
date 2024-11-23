@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import toast from "react-hot-toast";
 import axiosInstance from "../../ApiManager";
-import noResult from "../../images/no-results3.jpeg";
+import noResult from "../../../images/no-results3.jpeg";
 import ContainerPage from "../HelperPages/ContainerPage";
 import { useSelector } from "react-redux";
 

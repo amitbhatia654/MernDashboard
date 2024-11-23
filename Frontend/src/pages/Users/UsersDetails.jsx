@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import toast from "react-hot-toast";
-import noResult from "../../images/no-results3.jpeg";
+import noResult from "../../../images/no-results3.jpeg";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import { useSelector } from "react-redux";

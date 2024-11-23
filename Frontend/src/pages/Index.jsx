@@ -21,7 +21,6 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import user from "../images/dp.jpeg";
 import { remove } from "../reduxStore/UserSlice";
 import SideNav from "../Components/SideNav";
 

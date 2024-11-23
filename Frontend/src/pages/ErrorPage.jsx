@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import ErrorImage from "../images/ErrorPage.png";
+// import ErrorImage from "../images/ErrorPage.png";
+import ErrorImage from "../../images/errorpage.png";
 import { Button } from "@mui/material";
 
 export default function ErrorPage() {
